@@ -6,7 +6,16 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Mar 2024 22:04:07 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 15 Mar 2024 03:11:29 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Create a Blog</title>
+      <link>/post/create-a-blog/</link>
+      <pubDate>Fri, 15 Mar 2024 03:11:29 +0800</pubDate>
+      
+      <guid>/post/create-a-blog/</guid>
+      <description>使用Hugo和GitHub page搭建个人博客的一些碎碎念 🔗 一.首先肯定是要先下载go语言安装包 🔗 1.找到linux 版本go包  wget https://golang.google.cn/dl/go1.21.4.linux-amd64.tar.gz ``` - 2.解压到/usr/local （官方推荐） ```tar -C /usr/local -zxvf go1.17.5.linux-amd64.tar.gz``` - 3.添加到环境变量 &amp;gt; 习惯用vim，没有的话可以用命令sudo apt-get install vim安装一个 &amp;gt; vim /etc/profile（不会的话也可以直接cd到etc的文件夹里cat progile） &amp;gt; 在最后一行添加 &amp;gt; export GOROOT=/usr/local/go &amp;gt; export PATH=$PATH:$GOROOT/bin &amp;gt; 保存退出后source一下（vim 的使用方法可以自己搜索一下） &amp;gt; source /etc/profile - 5.查看是否安装成功 ```go version``` ## 二.安装Hugo - 1.首先下载 下载地址：wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_Linux-64bit.deb （这是终端的命令） - 2.安装Hugo 终端：sudo dpkg -i hugo_0.80.0_Linux-64bit.deb - 3.检查是否安装成功	终端：hugo version ## 三.在本地搭建静态网站  - 1.首先用hugo新建一个site 终端：hugo new site myblog（myblog是自定义的名字） - 2.</description>
+    </item>
+    
     <item>
       <title>My First Post</title>
       <link>/post/my-first-post/</link>

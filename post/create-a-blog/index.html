@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Create a Blog | My New Hugo Site</title>
+
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+<meta name="description" content="使用Hugo和GitHub page搭建个人博客的一些碎碎念 🔗 一.首先肯定是要先下载go语言安装包 🔗 1.找到linux 版本go包  wget https://golang.google.cn/dl/go1.21.4.linux-amd64.tar.gz ``` - 2.解压到/usr/local （官方推荐） ```tar -C /usr/local -zxvf go1.17.5.linux-amd64.tar.gz``` - 3.添加到环境变量 &gt; 习惯用vim，没有的话可以用命令sudo apt-get install vim安装一个 &gt; vim /etc/profile（不会的话也可以直接cd到etc的文件夹里cat progile） &gt; 在最后一行添加 &gt; export GOROOT=/usr/local/go &gt; export PATH=$PATH:$GOROOT/bin &gt; 保存退出后source一下（vim 的使用方法可以自己搜索一下） &gt; source /etc/profile - 5.查看是否安装成功 ```go version``` ## 二.安装Hugo - 1.首先下载 下载地址：wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_Linux-64bit.deb （这是终端的命令） - 2.安装Hugo 终端：sudo dpkg -i hugo_0.80.0_Linux-64bit.deb - 3.检查是否安装成功	终端：hugo version ## 三.在本地搭建静态网站  - 1.首先用hugo新建一个site 终端：hugo new site myblog（myblog是自定义的名字） - 2.">
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+
+
+
+
+
+
+
+  </head>
+
+  <body>
+    <nav class="navigation">
+	
+		<a href="/"> <span class="arrow">←</span>Home</a>
+	
+	<a href="/posts">Archive</a>
+	<a href="/tags">Tags</a>
+	<a href="/about">About</a>
+
+	
+
+	
+</nav>
+
+
+    <main class="main">
+      
+
+<section id="single">
+    <h1 class="title">Create a Blog</h1>
+
+    <div class="tip">
+        <time datetime="2024-03-15 03:11:29 &#43;0800 CST">Mar 15, 2024</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          242 words
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          2 minute read
+        </span>
+    </div>
+
+    
+    
+
+
+    <div class="content">
+      <h1 id="使用hugo和github-page搭建个人博客的一些碎碎念">使用Hugo和GitHub page搭建个人博客的一些碎碎念 <a href="#%e4%bd%bf%e7%94%a8hugo%e5%92%8cgithub-page%e6%90%ad%e5%bb%ba%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2%e7%9a%84%e4%b8%80%e4%ba%9b%e7%a2%8e%e7%a2%8e%e5%bf%b5" class="anchor">🔗</a></h1><hr>
+<h2 id="一首先肯定是要先下载go语言安装包">一.首先肯定是要先下载go语言安装包 <a href="#%e4%b8%80%e9%a6%96%e5%85%88%e8%82%af%e5%ae%9a%e6%98%af%e8%a6%81%e5%85%88%e4%b8%8b%e8%bd%bdgo%e8%af%ad%e8%a8%80%e5%ae%89%e8%a3%85%e5%8c%85" class="anchor">🔗</a></h2><ul>
+<li>1.找到linux 版本go包</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">wget https:<span style="color:#75715e">//golang.google.cn/dl/go1.21.4.linux-amd64.tar.gz ```
+</span><span style="color:#75715e"></span><span style="color:#f92672">-</span> <span style="color:#ae81ff">2.</span><span style="color:#960050;background-color:#1e0010">解压到</span><span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local <span style="color:#960050;background-color:#1e0010">（官方推荐）</span>
+
+<span style="color:#960050;background-color:#1e0010">```</span>tar <span style="color:#f92672">-</span>C <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>local <span style="color:#f92672">-</span>zxvf  go1<span style="color:#ae81ff">.17.5</span>.linux<span style="color:#f92672">-</span>amd64.tar.gz<span style="color:#960050;background-color:#1e0010">```</span>
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">3.</span><span style="color:#960050;background-color:#1e0010">添加到环境变量</span>
+
+   <span style="color:#f92672">&gt;</span> <span style="color:#960050;background-color:#1e0010">习惯用</span>vim<span style="color:#960050;background-color:#1e0010">，没有的话可以用命令</span>sudo apt<span style="color:#f92672">-</span>get install vim安装一个
+   
+   <span style="color:#f92672">&gt;</span>  vim <span style="color:#f92672">/</span>etc<span style="color:#f92672">/</span>profile<span style="color:#960050;background-color:#1e0010">（不会的话也可以直接</span>cd到etc的文件夹里cat progile<span style="color:#960050;background-color:#1e0010">）</span>
+   
+   <span style="color:#f92672">&gt;</span>  <span style="color:#960050;background-color:#1e0010">在最后一行添加</span>
+   
+   <span style="color:#f92672">&gt;</span>  export GOROOT<span style="color:#f92672">=/</span>usr<span style="color:#f92672">/</span>local<span style="color:#f92672">/</span>go
+   
+   <span style="color:#f92672">&gt;</span>  export PATH<span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">$</span>PATH:<span style="color:#960050;background-color:#1e0010">$</span>GOROOT<span style="color:#f92672">/</span>bin
+   
+   <span style="color:#f92672">&gt;</span>  <span style="color:#960050;background-color:#1e0010">保存退出后</span>source一下<span style="color:#960050;background-color:#1e0010">（</span>vim <span style="color:#960050;background-color:#1e0010">的使用方法可以自己搜索一下）</span>
+   
+   <span style="color:#f92672">&gt;</span>  source <span style="color:#f92672">/</span>etc<span style="color:#f92672">/</span>profile 
+   
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">5.</span><span style="color:#960050;background-color:#1e0010">查看是否安装成功</span>
+
+<span style="color:#960050;background-color:#1e0010">```</span>go version<span style="color:#960050;background-color:#1e0010">```</span>
+
+<span style="color:#75715e">##  二.安装Hugo
+</span><span style="color:#75715e"></span><span style="color:#f92672">-</span> <span style="color:#ae81ff">1.</span><span style="color:#960050;background-color:#1e0010">首先下载</span>
+   <span style="color:#960050;background-color:#1e0010">下载地址：</span>wget https:<span style="color:#75715e">//github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_Linux-64bit.deb
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">（这是终端的命令）</span>
+
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">2.</span><span style="color:#960050;background-color:#1e0010">安装</span>Hugo
+
+    <span style="color:#960050;background-color:#1e0010">终端：</span>sudo dpkg <span style="color:#f92672">-</span>i hugo_0<span style="color:#ae81ff">.80.0</span>_Linux<span style="color:#f92672">-</span><span style="color:#ae81ff">64</span>bit.deb
+    
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">3.</span><span style="color:#960050;background-color:#1e0010">检查是否安装成功</span>	
+
+    <span style="color:#960050;background-color:#1e0010">终端：</span>hugo version
+
+<span style="color:#75715e">## 三.在本地搭建静态网站
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">1.</span><span style="color:#960050;background-color:#1e0010">首先用</span>hugo新建一个site
+ 
+    <span style="color:#960050;background-color:#1e0010">终端：</span>hugo new site myblog<span style="color:#960050;background-color:#1e0010">（</span>myblog是自定义的名字<span style="color:#960050;background-color:#1e0010">）</span>
+    
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">2.</span><span style="color:#960050;background-color:#1e0010">下载主题</span>
+    <span style="color:#960050;background-color:#1e0010">主题官网：</span>https:<span style="color:#75715e">//themes.gohugo.io ，找到想要的主题，点击去，复制下载命令，下载到 myblog 目录下的 themes 目录下
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">你也可以压缩包下载后直接复制粘贴到</span>theme文件夹里面<span style="color:#960050;background-color:#1e0010">。（注意这个时候要把</span>myblog里面的config.toml在最后面添加theme <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">“你的主题文件名字”，并把第一行里面的链接删除）</span>
+
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">3.</span><span style="color:#960050;background-color:#1e0010">在本地启动博客</span>
+   <span style="color:#960050;background-color:#1e0010">在</span> myblog <span style="color:#960050;background-color:#1e0010">目录下命令：</span>hugo server
+   
+   <span style="color:#960050;background-color:#1e0010">之后会出现这样：</span>Web Server is available at http:<span style="color:#75715e">//localhost:1313/ (bind address 127.0.0.1)
+</span><span style="color:#75715e"></span>   
+   <span style="color:#960050;background-color:#1e0010">将</span>localhost:<span style="color:#ae81ff">1313</span><span style="color:#960050;background-color:#1e0010">放到本地浏览器中应该就可以看见自己做的网页了。</span>
+   
+<span style="color:#75715e">## 四.写一篇文章并上传到github上
+</span><span style="color:#75715e"></span><span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">、生成</span>md文件
+
+     <span style="color:#960050;background-color:#1e0010">在</span> myblog <span style="color:#960050;background-color:#1e0010">目录下</span>
+      <span style="color:#960050;background-color:#1e0010">终端：</span>hugo new post<span style="color:#f92672">/</span>blog.md<span style="color:#960050;background-color:#1e0010">（</span>blog.md可以是自己定义名字<span style="color:#960050;background-color:#1e0010">）</span>
+     
+     <span style="color:#960050;background-color:#1e0010">打开</span>blog.md<span style="color:#960050;background-color:#1e0010">，将其中的</span>true改成false让这个文本能被看到
+     
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">2.</span><span style="color:#960050;background-color:#1e0010">新建一个</span>github仓库
+
+     <span style="color:#960050;background-color:#1e0010">①新建一个仓库</span>
+
+     <span style="color:#960050;background-color:#1e0010">②填写仓库地址，填写格式为：用户名小写</span>.github.io <span style="color:#960050;background-color:#1e0010">，例如我的仓库地址：</span>wujvya.github.io <span style="color:#960050;background-color:#1e0010">，那么我就可以通过</span> https:<span style="color:#75715e">//wujvya.github.io 来访问我的博客
+</span><span style="color:#75715e"></span>
+     <span style="color:#960050;background-color:#1e0010">③创建仓库</span>
+     
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">3.</span><span style="color:#960050;background-color:#1e0010">生成静态网页</span>
+    
+    hugo  <span style="color:#960050;background-color:#1e0010">命令可以将你写的</span> Markdown <span style="color:#960050;background-color:#1e0010">文件生成静态</span> HTML <span style="color:#960050;background-color:#1e0010">网页，生成的</span> HTML <span style="color:#960050;background-color:#1e0010">文件默认存放在</span> public <span style="color:#960050;background-color:#1e0010">文件夹中。</span>
+    <span style="color:#960050;background-color:#1e0010">终端：</span>hugo
+    
+    <span style="color:#960050;background-color:#1e0010">因为</span>hugo生成的静态 HTML <span style="color:#960050;background-color:#1e0010">网页文件默认存放在</span>public文件中<span style="color:#960050;background-color:#1e0010">，</span>
+    
+    <span style="color:#960050;background-color:#1e0010">所以推送网页内容只需要把</span>public中的HTML网页文件发布到GitHub Pages <span style="color:#960050;background-color:#1e0010">仓库中。</span>
+
+    <span style="color:#960050;background-color:#1e0010">将</span>public文件夹初始化为 Git <span style="color:#960050;background-color:#1e0010">仓库，并设置默认主分支名为</span>  main<span style="color:#960050;background-color:#1e0010">。这么做的原因是：</span>
+
+    GitHub <span style="color:#960050;background-color:#1e0010">创建仓库时生成的默认主分支名是</span> main
+    <span style="color:#960050;background-color:#1e0010">用</span> git init <span style="color:#960050;background-color:#1e0010">初始化</span> Git <span style="color:#960050;background-color:#1e0010">仓库时创建的默认主分支名是</span> master
+    <span style="color:#960050;background-color:#1e0010">将</span> git init <span style="color:#960050;background-color:#1e0010">创建的</span> master <span style="color:#960050;background-color:#1e0010">修改成</span> main <span style="color:#960050;background-color:#1e0010">，再推送给远端仓库</span> <span style="color:#f92672">&lt;</span>username<span style="color:#f92672">&gt;</span>.github.io <span style="color:#960050;background-color:#1e0010">，这样才不会报错。</span>
+
+    <span style="color:#960050;background-color:#1e0010">终端：</span>cd public
+    git init <span style="color:#f92672">-</span>b main
+
+    
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">4.</span><span style="color:#960050;background-color:#1e0010">关联</span>ssh
+   <span style="color:#960050;background-color:#1e0010">将</span> public  <span style="color:#960050;background-color:#1e0010">文件夹关联远程</span> GitHub Pages <span style="color:#960050;background-color:#1e0010">仓库，使用</span> GitHub Pages <span style="color:#960050;background-color:#1e0010">仓库的</span> SSH <span style="color:#960050;background-color:#1e0010">链接。</span>
+
+   <span style="color:#960050;background-color:#1e0010">（</span> <span style="color:#960050;background-color:#1e0010">⚠️</span> <span style="color:#960050;background-color:#1e0010">注意：要让</span> SSH <span style="color:#960050;background-color:#1e0010">链接起作用，需要你添加过</span> SSH Key<span style="color:#960050;background-color:#1e0010">。如果你没有设置过</span> SSH Key<span style="color:#960050;background-color:#1e0010">，请参考</span> https:<span style="color:#75715e">//blog.csdn.net/muxuen/article/details/124662978?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=linux%E9%85%8D%E7%BD%AEssh%20github&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-124662978.142^v99^pc_search_result_base8&amp;spm=1018.2226.3001.4187
+</span><span style="color:#75715e"></span>
+   <span style="color:#960050;background-color:#1e0010">千万记住</span>ssh一定要打开 <span style="color:#960050;background-color:#1e0010">可以参考：</span><span style="color:#ae81ff">1.</span>https:<span style="color:#75715e">//blog.csdn.net/m0_67402970/article/details/126434165
+</span><span style="color:#75715e"></span>
+
+    <span style="color:#ae81ff">2.</span> https:<span style="color:#75715e">//blog.csdn.net/shenxinde/article/details/124119911
+</span><span style="color:#75715e"></span>    <span style="color:#960050;background-color:#1e0010">终端输入：</span>git remote add origin (<span style="color:#960050;background-color:#1e0010">你仓库导航栏地址</span><span style="color:#f92672">+</span>.git)
+    
+<span style="color:#f92672">-</span> <span style="color:#ae81ff">5.</span><span style="color:#960050;background-color:#1e0010">推送博客源仓库的</span>  public  <span style="color:#960050;background-color:#1e0010">文件夹中的</span> HTML <span style="color:#960050;background-color:#1e0010">网页文件到</span> GitHub Pages <span style="color:#960050;background-color:#1e0010">仓库</span> <span style="color:#960050;background-color:#1e0010">中，在推送仓库内容前要先用</span>
+    git pull <span style="color:#f92672">--</span>rebase origin main <span style="color:#960050;background-color:#1e0010">和远端仓库同步，否则会报错。</span>
+    
+    git pull <span style="color:#f92672">--</span>rebase origin main
+
+    git add .
+
+    git commit <span style="color:#f92672">-</span>m <span style="color:#e6db74">&#34;...(修改的信息)&#34;</span>
+    
+    git push origin main
+    
+    
+ <span style="color:#75715e">### ps：用push有可能不能推送，会显示：Please use a personal access token instead.
+</span><span style="color:#75715e"></span> 
+ <span style="color:#960050;background-color:#1e0010">解决方法：</span>
+https:<span style="color:#75715e">//zhuanlan.zhihu.com/p/401978754
+</span></code></pre></div>
+    </div>
+
+    
+    
+    
+
+</section>
+
+
+    </main>
+    
+    <footer id="footer">
+    
+
+    <div class="copyright">
+    
+       © Copyright 
+       2024 
+       <span class="split">
+        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
+  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
+</svg>
+       </span>
+       
+    
+    </div>
+
+    
+      <div class="powerby">
+        Powered by <a href='http://www.gohugo.io/'>Hugo</a> Theme By <a href='https://github.com/nodejh/hugo-theme-mini'>nodejh</a>
+      </div>
+    
+</footer>
+
+
+
+  </body>
+</html>
