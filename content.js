@@ -111,7 +111,7 @@ window.SITE = {
       year: '2025',
       role: '全栈独立开发',
       summary:
-        '面向动漫爱好者的内容社区：前台展示站 + 后台管理系统 + 后端 API，三端从数据库表设计做到页面。',
+        '面向动漫爱好者的内容社区：前台展示站 + 后台管理系统 + 后端 API 放在同一个仓库维护，三端从数据库表设计做到页面。',
       paragraphs: [
         '最难处理的不是页面数量，而是三端协同：同一个内容模型要同时喂给前台展示、后台管理和后端接口。做法是后端统一返回 { code, message, data }，前端在 axios 拦截器里一次性解包并处理 401，业务层只拿数据本身，字段改动时不用逐页改判断。',
         '后台用 Element Plus 搭侧边栏 + 路由守卫 + ECharts 统计看板（内容分布环形图、7 日新增折线图），配番剧 / 文章 / 视频 / 用户四套 CRUD 表单；后端 Spring Boot + MyBatis-Plus + JWT(HS256) + BCrypt，按「公开读 / 登录互动 / 管理员改删」做接口级权限。'
@@ -142,10 +142,7 @@ window.SITE = {
           caption: '后台管理系统 · ECharts 看板'
         }
       ],
-      links: [
-        { label: '前端仓库', href: 'https://github.com/sansanyih/ACGfans-web', primary: true },
-        { label: '后端仓库', href: 'https://github.com/sansanyih/Acg-fans' }
-      ]
+      links: [{ label: '源码（三端同仓）', href: 'https://github.com/sansanyih/Acg-fans', primary: true }]
     }
   ],
 
