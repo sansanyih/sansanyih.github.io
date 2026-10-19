@@ -1,131 +1,108 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html>
+<html lang="zh-CN">
   <head>
-    <title>My New Hugo Site</title>
-
-    <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
-<meta name="viewport" content="width=device-width,minimum-scale=1">
-<meta name="description" content="">
-<meta name="generator" content="Hugo 0.80.0" />
-
-
-  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-
-
-<link rel="stylesheet" href="/css/style.css">
-
-
-
-<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
-
-
-
-
-
-
-  
-    <link href="/index.xml" rel="alternate" type="application/rss+xml" title="My New Hugo Site" />
-    <link href="/index.xml" rel="feed" type="application/rss+xml" title="My New Hugo Site" />
-  
-
-
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>申思宇 · 前端开发工程师</title>
+    <meta
+      name="description"
+      content="申思宇，前端开发工程师（2026 届）。Vue3 全栈 / uni-app 跨端 / 前端工程化。精选项目：TinyShop 跨端商城重构、AI PPT 生成器、CnAcg 动漫社区。"
+    />
+    <meta name="theme-color" content="#0b0b0c" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-
   <body>
-    <nav class="navigation">
-	
-	<a href="/posts">Archive</a>
-	<a href="/tags">Tags</a>
-	<a href="/about">About</a>
+    <a class="skip" href="#work">跳到作品</a>
 
-	
-
-	
-</nav>
-
-
-    <main class="main">
-      
-<header class="profile">
-    
-        <img class="avatar" alt="avatar" src="/images/avatar.png" />
-    
-
-    <h1>My New Hugo Site</h1>
-    
-    
-</header>
-
-<div id="list-page">
-    
-    
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/post/create-a-blog/'>Create a Blog</a></h1>
-            <div class ="date">
-                <time datetime="2024-03-15 03:11:29 &#43;0800 CST">Mar 15, 2024</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">使用Hugo和GitHub page搭建个人博客的一些碎碎念 🔗 一.首先肯定是要先下载go语言安装包 🔗 1.找到linux 版本go包  wget https://golang.google.cn/dl/go1.21.4.linux-amd64.tar.gz ``` - 2.解压到/usr/local （官方推荐） ```tar -C /usr/local -zxvf go1.17.5.linux-amd64.tar.gz``` - 3.添加到环境变量 &gt; 习惯用vim，没有的话可以用命令sudo apt-get install vim安装一个 &gt; vim /etc/profile（不会的话也可以直接cd到etc的文件夹里cat progile） &gt; 在最后一行添加 &gt; export GOROOT=/usr/local/go &gt; export PATH=$PATH:$GOROOT/bin &gt; 保存退出后source一下（vim 的使用方法可以自己搜索一下） &gt; source /etc/profile - 5.查看是否安装成功 ```go version``` ## 二.安装Hugo - 1.首先下载 下载地址：wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_Linux-64bit.deb （这是终端的命令） - 2.安装Hugo 终端：sudo dpkg -i hugo_0.80.0_Linux-64bit.deb - 3.检查是否安装成功	终端：hugo version ## 三.在本地搭建静态网站  - 1.首先用hugo新建一个site 终端：hugo new site myblog（myblog是自定义的名字） - 2.</div>
-          
-
-        </section>
-    
-        
-        
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='/post/my-first-post/'>My First Post</a></h1>
-            <div class ="date">
-                <time datetime="2024-03-14 22:04:07 &#43;0800 CST">Mar 14, 2024</time>  
-            </div>
-          </div>
-
-          
-              <div class="summary">看看你的 🔗</div>
-          
-
-        </section>
-    
-
-    
-
-
-</div>
-
-    </main>
-    
-    <footer id="footer">
-    
-
-    <div class="copyright">
-    
-       © Copyright 
-       2024 
-       <span class="split">
-        <svg fill="#bbbbbb" width="15" height="15" version="1.1" id="heart-15" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 15 15">
-  <path d="M13.91,6.75c-1.17,2.25-4.3,5.31-6.07,6.94c-0.1903,0.1718-0.4797,0.1718-0.67,0C5.39,12.06,2.26,9,1.09,6.75&#xA;&#x9;C-1.48,1.8,5-1.5,7.5,3.45C10-1.5,16.48,1.8,13.91,6.75z"/>
-</svg>
-       </span>
-       
-    
-    </div>
-
-    
-      <div class="powerby">
-        Powered by <a href='http://www.gohugo.io/'>Hugo</a> Theme By <a href='https://github.com/nodejh/hugo-theme-mini'>nodejh</a>
+    <header class="nav" id="nav">
+      <div class="nav__inner">
+        <a class="nav__brand" href="#top">
+          <span class="nav__mark">✳</span>
+          <span>申思宇</span>
+          <span class="nav__brand-sub">SHEN SIYU</span>
+        </a>
+        <nav class="nav__links" aria-label="页面导航">
+          <a href="#work" data-nav="work"><i>01</i>作品</a>
+          <a href="#approach" data-nav="approach"><i>02</i>方法</a>
+          <a href="#journey" data-nav="journey"><i>03</i>经历</a>
+          <a href="#contact" data-nav="contact"><i>04</i>联系</a>
+        </nav>
       </div>
-    
-</footer>
+    </header>
 
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__grid">
+          <div class="hero__text">
+            <p class="eyebrow" id="hero-eyebrow"></p>
+            <h1 class="hero__name" id="hero-title"></h1>
+            <p class="hero__role" id="hero-role"></p>
+            <p class="hero__tagline" id="hero-tagline"></p>
+            <ul class="hero__stack" id="hero-stack" aria-label="技术栈"></ul>
+            <div class="hero__actions" id="hero-actions"></div>
+          </div>
 
+          <div class="hero__aside" aria-hidden="true">
+            <div class="orb">
+              <div class="orb__ring"></div>
+              <div class="orb__ring orb__ring--2"></div>
+              <div class="orb__core"></div>
+              <div class="orb__scanline"></div>
+            </div>
+            <p class="hero__aside-label">CANVAS · CSS ONLY</p>
+          </div>
+        </div>
 
+        <ul class="metrics" id="hero-metrics" aria-label="关键数据"></ul>
+
+        <p class="hero__scroll"><span>↓</span> 精选作品在下面</p>
+      </section>
+
+      <section class="section" id="work" aria-labelledby="work-title">
+        <div class="section__head">
+          <p class="section__index">01 / SELECTED WORK</p>
+          <h2 class="section__title" id="work-title">精选作品</h2>
+          <p class="section__note" id="work-note"></p>
+        </div>
+        <div class="work" id="work-list"></div>
+      </section>
+
+      <section class="section" id="approach" aria-labelledby="approach-title">
+        <div class="section__head">
+          <p class="section__index">02 / APPROACH</p>
+          <h2 class="section__title" id="approach-title">我怎么做事</h2>
+        </div>
+        <div class="approach" id="approach-list"></div>
+      </section>
+
+      <section class="section" id="journey" aria-labelledby="journey-title">
+        <div class="section__head">
+          <p class="section__index">03 / JOURNEY</p>
+          <h2 class="section__title" id="journey-title">经历</h2>
+        </div>
+        <ol class="journey" id="journey-list"></ol>
+        <ul class="honors" id="honors-list"></ul>
+      </section>
+
+      <section class="section section--contact" id="contact" aria-labelledby="contact-title">
+        <p class="section__index">04 / CONTACT</p>
+        <h2 class="contact__title" id="contact-title">聊聊一个小项目？</h2>
+        <div class="contact__row">
+          <a class="contact__email" id="contact-email" href="#"></a>
+          <button class="contact__copy" id="copy-email" type="button">复制邮箱</button>
+        </div>
+        <ul class="contact__links" id="contact-links"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span id="footer-name">申思宇</span>
+      <span class="footer__meta">纯 HTML / CSS / 原生 JS · 无构建步骤 · 内容在 <code>content.js</code></span>
+      <span id="footer-year"></span>
+    </footer>
+
+    <script src="content.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
