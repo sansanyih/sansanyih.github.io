@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 渲染与交互 —— 内容全部来自 content.js，这里只负责「怎么呈现」
  */
 ;(function () {
@@ -88,7 +88,9 @@
       if (image.caption) figure.appendChild(el('figcaption', 'modal__caption', image.caption))
       m.media.appendChild(figure)
     })
-    m.media.hidden = !(item.images ?? []).length
+    const imgs = item.images ?? []
+    m.media.hidden = !imgs.length
+    m.box.classList.toggle('modal--phone', imgs.length > 0 && imgs.every((img) => img.fit === 'phone'))
 
     m.meta.textContent = `${item.index} / ${item.year} · ${item.role}`
     m.title.textContent = item.title
