@@ -72,6 +72,8 @@ window.SITE = {
         { v: '3 种', l: '文档解析' },
         { v: '.pptx', l: '导出格式' }
       ],
+      image: 'assets/aippt.jpg',
+      imageAlt: 'AI PPT 生成器：输入需求后由 DeepSeek 流式返回 5 页 PPT 大纲',
       links: [{ label: '源码', href: 'https://github.com/sansanyih/ai-ppt-generator', primary: true }]
     },
 
@@ -94,6 +96,8 @@ window.SITE = {
         { v: '16', l: '数据表' },
         { v: '3', l: '端' }
       ],
+      image: 'assets/cnacg.jpg',
+      imageAlt: 'CnAcg 首页：番剧轮播、随机推荐卡片（咒术回战 / 进击的巨人 / 紫罗兰永恒花园）',
       links: [
         { label: '前端仓库', href: 'https://github.com/sansanyih/ACGfans-web', primary: true },
         { label: '后端仓库', href: 'https://github.com/sansanyih/Acg-fans' }
