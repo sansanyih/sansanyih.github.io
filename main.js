@@ -13,7 +13,8 @@
     return node
   }
   // 外站新开标签页，同站（如 Demo 子路径）保持当前页跳转
-  const external = (a) => {
+  const external = (a, href) => {
+    if (href) a.href = href
     try {
       if (new URL(a.href, location.href).origin !== location.origin) {
         a.target = '_blank'
@@ -84,8 +85,7 @@
     m.media.replaceChildren()
     ;(item.images ?? []).forEach((image) => {
       const figure = el('figure', 'modal__figure')
-      const link = external(el('a', 'modal__shot'))
-      link.href = image.src
+      const link = external(el('a', 'modal__shot'), image.src)
       link.setAttribute('aria-label', `查看原图：${image.caption ?? item.title}`)
       const node = el('img', 'modal__img modal__img--' + (image.fit ?? 'desktop'))
       node.src = image.src
@@ -124,9 +124,7 @@
 
     m.links.replaceChildren()
     ;(item.links ?? []).forEach((link) => {
-      const a = external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'))
-      a.href = link.href
-      m.links.appendChild(a)
+      m.links.appendChild(external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'), link.href))
     })
 
     m.box.hidden = false
@@ -242,9 +240,7 @@
 
     const links = el('div', 'card__links')
     ;(item.links ?? []).forEach((link) => {
-      const a = external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'))
-      a.href = link.href
-      links.appendChild(a)
+      links.appendChild(external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'), link.href))
     })
     const detailBtn = el('button', 'link link--ghost', '项目详情 +')
     detailBtn.type = 'button'
@@ -319,9 +315,7 @@
   const links = $('#contact-links')
   S.contact.links.forEach((link) => {
     const li = el('li')
-    const a = external(el('a', null, link.label + ' ↗'))
-    a.href = link.href
-    li.appendChild(a)
+    li.appendChild(external(el('a', null, link.label + ' ↗'), link.href))
     links.appendChild(li)
   })
 
