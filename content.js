@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 站点内容配置 —— 以后维护只改这个文件。
  * 改完 commit & push，GitHub Pages 自动更新。
  */
@@ -131,10 +131,16 @@ window.SITE = {
       ],
       images: [
         {
-          src: 'assets/cnacg.jpg',
-          alt: 'CnAcg 前台首页：番剧轮播与随机推荐卡片',
+          src: 'assets/cnacg-home.jpg',
+          alt: 'CnAcg 前台首页：横幅位与随机推荐番剧卡片',
           fit: 'desktop',
-          caption: '前台展示站'
+          caption: '前台首页'
+        },
+        {
+          src: 'assets/cnacg-sections.jpg',
+          alt: 'CnAcg 前台内容区：最新动态、每周速报、最新文章',
+          fit: 'desktop',
+          caption: '前台内容区'
         },
         {
           src: 'assets/cnacg-admin.jpg',
