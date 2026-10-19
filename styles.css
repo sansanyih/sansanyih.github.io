@@ -534,6 +534,24 @@ body.is-locked {
   object-fit: cover;
   object-position: top left;
 }
+
+/* 只有一张图时完整展示，不裁切 */
+.modal__media--single {
+  grid-auto-flow: row;
+}
+.modal__media--single .modal__figure {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+.modal__media--single .modal__img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 44vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
 .modal__caption {
   position: absolute;
   left: 12px;
