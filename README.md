@@ -1,50 +1,64 @@
 # 个人主页 · sansanyih.github.io
 
 在线地址：**https://sansanyih.github.io/**
+技术笔记：**https://sansanyih.github.io/blog/**
 
-用于展示个人项目与技术方向的静态主页。纯 HTML + CSS + 原生 JavaScript，无框架、无构建依赖，首屏体积约 90KB。
+主站是纯 HTML / CSS / 原生 JS 的静态页面（无框架、无构建）；博客在 `/blog/` 子目录，用 VitePress 从 Markdown 构建。
 
-## 内容
+## 结构
 
-| 区块 | 内容 |
+| 路径 | 内容 |
 | --- | --- |
-| 首屏 | 姓名、岗位、一句话介绍、技术栈、三项关键数据 |
-| 01 精选作品 | TinyShop 跨端商城重构 / AI PPT 生成器 / CnAcg 动漫信息平台 |
-| 02 方法 | 三条工作原则：先量再改、结构优先、可维护性 |
-| 03 经历 | 实习、开源协作、教育背景 |
-| 04 联系 | 邮箱与主要链接 |
+| `index.html` / `styles.css` / `content.js` / `main.js` | 主站（作品、方法、经历、联系） |
+| `vitepress/` | 博客源码（Markdown + 主题配置） |
+| `vitepress/posts/*.md` | 文章 |
+| `.github/workflows/deploy.yml` | 构建博客 + 部署整站到 GitHub Pages |
 
-每个作品包含：技术栈、实现要点、关键指标（包体积 / 首屏性能 / 模块数量）、演示与源码地址。
+## 主站
 
-## 技术说明
+- 内容集中在 `content.js`，`main.js` 只负责渲染与交互
+- 三个作品卡片，点开是详情弹层（多图、正文、指标、链接）
+- 响应式断点 960px / 560px；图片带 `alt`，尊重「减少动态效果」设置
+- 视觉：近黑底 + 单一强调色 `#ff5a3c`
 
-- **零依赖**：不使用框架与构建工具，直接部署静态文件
-- **内容与视图分离**：页面内容集中定义在 `content.js`，`main.js` 只负责渲染与交互
-- **响应式**：桌面双栏、移动端单栏，断点 960px / 560px
-- **无障碍**：图片提供 `alt`、键盘焦点可见、尊重系统「减少动态效果」设置
-- **视觉**：近黑底 + 单一强调色（`#ff5a3c`），标题与等宽编号构成版式层级
+## 博客（VitePress）
 
-## 本地预览
+写一篇新文章的流程：
+
+1. 在 `vitepress/posts/` 新建 Markdown，文件头写 front matter：
+
+```md
+---
+title: 文章标题
+date: 2026-01-12
+tags: [重构, uni-app]
+description: 一句话摘要，会出现在列表和搜索结果里
+---
+
+正文……
+```
+
+2. 在 `vitepress/index.md` 的列表里加一张卡片（指向 `./posts/你的文件名`）
+3. `git push` —— GitHub Actions 会自动跑 `vitepress build`，把产物放进 `/blog/` 并部署
+
+本地预览：
+
+```bash
+cd vitepress
+npm install
+npm run dev      # http://localhost:5173/blog/
+```
+
+## 部署
+
+GitHub Pages 的 source 设为 **GitHub Actions**（不是分支部署），因为博客需要构建。
+`.github/workflows/deploy.yml` 会：装依赖 → `vitepress build` → 把主站文件 + 博客产物组装成 `_site/` → 上传发布。
+
+## 本地预览主站
 
 ```bash
 npx serve .
 ```
-
-或用任意静态服务器打开根目录。
-
-## 目录结构
-
-```
-index.html    页面结构
-styles.css    全部样式（设计变量集中在 :root）
-content.js    站点内容
-main.js       渲染逻辑与交互
-assets/       图片与图标
-```
-
-## 维护
-
-新增或修改作品时，在 `content.js` 的 `work` 数组中追加或编辑条目即可；未配置 `image` 的作品会自动渲染为「关键数据 + 技术标签」的规格面板。图片建议使用 WebP，宽度不超过 1200px。
 
 ## 联系
 
