@@ -2,7 +2,7 @@
   "name": "sansanyih-blog",
   "private": true,
   "version": "1.0.0",
-  "description": "申思宇的技术笔记 · VitePress",
+  "description": "叁叁一的技术笔记 · VitePress",
   "scripts": {
     "dev": "vitepress dev .",
     "build": "vitepress build .",

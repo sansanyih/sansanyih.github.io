@@ -260,6 +260,26 @@
     approach.appendChild(block)
   })
 
+  /* ---------------- 技术笔记 ---------------- */
+  if (S.blog) {
+    $('#notes-note').textContent = S.blog.intro ?? ''
+    const list = $('#notes-list')
+    ;(S.blog.posts ?? []).forEach((post) => {
+      const a = external(el('a', 'note'))
+      a.href = post.href
+      const meta = el('div', 'note__meta')
+      meta.appendChild(el('span', null, post.date))
+      ;(post.tags ?? []).forEach((tag) => meta.appendChild(el('span', 'note__tag', tag)))
+      a.appendChild(meta)
+      a.appendChild(el('h3', 'note__title', post.title))
+      a.appendChild(el('p', 'note__summary', post.summary))
+      a.appendChild(el('span', 'note__more', '阅读全文 ↗'))
+      list.appendChild(a)
+    })
+    const all = $('#notes-all')
+    if (all && S.blog.allUrl) all.href = S.blog.allUrl
+  }
+
   /* ---------------- 经历 ---------------- */
   const journey = $('#journey-list')
   S.journey.forEach((row) => {
@@ -300,7 +320,7 @@
 
   /* ---------------- 导航高亮 + 渐显 ---------------- */
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const sections = ['work', 'approach', 'journey', 'contact']
+  const sections = ['work', 'approach', 'notes', 'journey', 'contact']
     .map((id) => document.getElementById(id))
     .filter(Boolean)
 

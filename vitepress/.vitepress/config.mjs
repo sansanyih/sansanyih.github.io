@@ -1,8 +1,8 @@
-import { defineConfig } from 'vitepress'
+﻿import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: '申思宇 · 技术笔记',
+  title: '叁叁一 · 技术笔记',
   description: '重构、性能、跨端——写清楚踩过的坑和当时的判断依据。',
   base: '/blog/',
   srcExclude: ['README.md'],
@@ -10,7 +10,7 @@ export default defineConfig({
   head: [['meta', { name: 'theme-color', content: '#0b0b0c' }]],
   themeConfig: {
     logo: false,
-    siteTitle: '申思宇 · 笔记',
+    siteTitle: '叁叁一 · 笔记',
     nav: [
       { text: '笔记', link: '/' },
       { text: '归档', link: '/archive' },
@@ -34,7 +34,7 @@ export default defineConfig({
     lastUpdated: { text: '最后更新', formatOptions: { dateStyle: 'medium' } },
     footer: {
       message: '重构 · 性能 · 跨端',
-      copyright: '© 申思宇'
+      copyright: '© 叁叁一'
     }
   },
   markdown: { lineNumbers: true }

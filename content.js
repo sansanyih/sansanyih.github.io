@@ -5,8 +5,8 @@
 window.SITE = {
   profile: {
     eyebrow: '2026 届 · 深圳 / 广州 · 接受远程',
-    name: '申思宇',
-    latin: 'SHEN SIYU',
+    name: '叁叁一',
+    latin: 'SAN SAN YI',
     role: '前端开发工程师',
     tagline: '把想法做成能用的产品，把旧代码改成能维护的样子。',
     stack: ['Vue3', 'TypeScript', 'uni-app', 'Vite', 'Pinia', 'Spring Boot'],
@@ -17,6 +17,7 @@ window.SITE = {
     ],
     actions: [
       { label: '看作品', href: '#work', primary: true },
+      { label: '技术笔记', href: '#notes' },
       { label: '在线 Demo', href: 'https://sansanyih.github.io/tinyshop-vue3/' },
       { label: 'GitHub', href: 'https://github.com/sansanyih', external: true }
     ]
@@ -183,6 +184,27 @@ window.SITE = {
       note: '蓝桥杯省级二等奖、算法杯二等奖'
     }
   ],
+
+  blog: {
+    intro: '重构、性能、跨端——写清楚踩过的坑和当时的判断依据，而不是「优化了性能」这种结论。',
+    allUrl: 'https://sansanyih.github.io/blog/',
+    posts: [
+      {
+        title: '把 2020 年的商城迁到 Vue3 之后',
+        date: '2026-01-12',
+        tags: ['重构', 'uni-app'],
+        summary: 'node-sass 编译失败、53 个页面共用一套 mixin、Vuex 全局状态——迁移真正的难点不在语法，而在决定先动哪一层。',
+        href: 'https://sansanyih.github.io/blog/posts/tinyshop-migration'
+      },
+      {
+        title: '首屏 4MB 是怎么砍到 1.4MB 的',
+        date: '2025-06-20',
+        tags: ['性能', 'Vite'],
+        summary: '为什么「动作触发的动态 import」比「路由级懒加载」更适合工具类应用。',
+        href: 'https://sansanyih.github.io/blog/posts/first-screen-4mb'
+      }
+    ]
+  },
 
   contact: {
     email: 'shensiyu144@gmail.com',
