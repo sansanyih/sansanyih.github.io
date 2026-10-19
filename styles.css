@@ -535,22 +535,25 @@ body.is-locked {
   object-position: top left;
 }
 
-/* 只有一张图时完整展示，不裁切 */
+/* 只有一张图时：弹层收窄、图片完整展示 */
+.modal--single .modal__panel {
+  width: min(820px, 100%);
+}
 .modal__media--single {
   grid-auto-flow: row;
 }
 .modal__media--single .modal__figure {
   display: flex;
   justify-content: center;
-  padding: 16px;
+  padding: 18px;
 }
 .modal__media--single .modal__img {
   width: auto;
   max-width: 100%;
   height: auto;
-  max-height: 44vh;
+  max-height: 40vh;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 .modal__caption {
   position: absolute;

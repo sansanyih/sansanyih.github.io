@@ -66,7 +66,12 @@ window.SITE = {
         {
           src: 'assets/tinyshop-home.webp',
           alt: '小蜂商城首页：Banner、分类入口、双列商品瀑布流',
-          caption: 'H5 首页 —— 真实运行截图'
+          caption: '首页'
+        },
+        {
+          src: 'assets/tinyshop-detail.jpg',
+          alt: '小蜂商城商品详情页：价格区、规格选择与底部购买栏',
+          caption: '商品详情'
         }
       ],
       links: [

@@ -95,6 +95,7 @@
     const count = (item.images ?? []).length
     m.media.hidden = !count
     m.media.classList.toggle('modal__media--single', count === 1)
+    m.box.classList.toggle('modal--single', count === 1)
 
     m.meta.textContent = `${item.index} / ${item.year} · ${item.role}`
     m.title.textContent = item.title
