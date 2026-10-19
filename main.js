@@ -12,9 +12,16 @@
     if (text != null) node.textContent = text
     return node
   }
+  // 外站新开标签页，同站（如 Demo 子路径）保持当前页跳转
   const external = (a) => {
-    a.target = '_blank'
-    a.rel = 'noopener'
+    try {
+      if (new URL(a.href, location.href).origin !== location.origin) {
+        a.target = '_blank'
+        a.rel = 'noopener'
+      }
+    } catch {
+      /* ignore */
+    }
     return a
   }
 
