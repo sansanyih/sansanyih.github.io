@@ -1,0 +1,14 @@
+{
+  "name": "sansanyih-blog",
+  "private": true,
+  "version": "1.0.0",
+  "description": "申思宇的技术笔记 · VitePress",
+  "scripts": {
+    "dev": "vitepress dev .",
+    "build": "vitepress build .",
+    "preview": "vitepress preview ."
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}
