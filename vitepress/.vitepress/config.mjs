@@ -7,34 +7,35 @@ export default defineConfig({
   base: '/blog/',
   srcExclude: ['README.md'],
   cleanUrls: false,
+  head: [['meta', { name: 'theme-color', content: '#0b0b0c' }]],
   themeConfig: {
     logo: false,
     siteTitle: '申思宇 · 笔记',
     nav: [
-      { text: '首页', link: '/' },
-      { text: '重构', link: '/posts/tinyshop-migration' },
-      { text: '性能', link: '/posts/first-screen-4mb' },
-      { text: '返回主页', link: 'https://sansanyih.github.io/' }
+      { text: '笔记', link: '/' },
+      { text: '归档', link: '/archive' },
+      { text: '主页', link: 'https://sansanyih.github.io/', target: '_blank', rel: 'noopener' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/sansanyih' }],
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: { buttonText: '搜索文章', buttonAriaLabel: '搜索文章' },
+          modal: { noResultsText: '没有找到相关文章', resetButtonTitle: '清空', footer: { selectText: '选择', navigateText: '切换', closeText: '关闭' } }
+        }
+      }
+    },
     outline: { level: [2, 3], label: '本页目录' },
     docFooter: { prev: '上一篇', next: '下一篇' },
     darkModeSwitchLabel: '主题',
     returnToTopLabel: '回到顶部',
     sidebarMenuLabel: '目录',
-    lastUpdated: {
-      text: '最后更新',
-      formatOptions: { dateStyle: 'medium' }
-    },
+    lastUpdated: { text: '最后更新', formatOptions: { dateStyle: 'medium' } },
     footer: {
       message: '重构 · 性能 · 跨端',
       copyright: '© 申思宇'
     }
   },
-  markdown: {
-    lineNumbers: true
-  },
-  head: [
-    ['meta', { name: 'theme-color', content: '#0b0b0c' }]
-  ]
+  markdown: { lineNumbers: true }
 })
