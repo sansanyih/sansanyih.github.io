@@ -13,30 +13,46 @@
     return node
   }
 
-  /* ---------------- 截图弹层 ---------------- */
-  let lightbox = null
+  const external = (a) => {
+    a.target = '_blank'
+    a.rel = 'noopener'
+    return a
+  }
+
+  /* ---------------- 项目详情弹层 ---------------- */
+  let modal = null
   let lastFocused = null
 
-  function buildLightbox() {
-    const box = el('div', 'lightbox')
+  function buildModal() {
+    const box = el('div', 'modal')
     box.setAttribute('role', 'dialog')
     box.setAttribute('aria-modal', 'true')
-    box.setAttribute('aria-label', '截图预览')
+    box.setAttribute('aria-labelledby', 'modal-title')
     box.hidden = true
 
-    const close = el('button', 'lightbox__close', '✕')
+    const close = el('button', 'modal__close', '✕')
     close.type = 'button'
-    close.setAttribute('aria-label', '关闭预览')
+    close.setAttribute('aria-label', '关闭')
 
-    const figure = el('figure', 'lightbox__figure')
-    const img = el('img', 'lightbox__img')
-    img.alt = ''
-    const caption = el('figcaption', 'lightbox__caption')
-    figure.appendChild(img)
-    figure.appendChild(caption)
+    const panel = el('div', 'modal__panel')
+    const media = el('div', 'modal__media')
+    const img = el('img', 'modal__img')
+    media.appendChild(img)
 
-    box.appendChild(close)
-    box.appendChild(figure)
+    const body = el('div', 'modal__body')
+    const meta = el('p', 'modal__meta')
+    const title = el('h3', 'modal__title')
+    title.id = 'modal-title'
+    const subtitle = el('p', 'modal__subtitle')
+    const summary = el('p', 'modal__summary')
+    const points = el('ul', 'modal__points')
+    const tags = el('div', 'modal__tags')
+    const stats = el('div', 'modal__metrics')
+    const links = el('div', 'modal__links')
+
+    body.append(meta, title, subtitle, summary, points, tags, stats, links)
+    panel.append(media, body)
+    box.append(close, panel)
     document.body.appendChild(box)
 
     const hide = () => {
@@ -52,18 +68,49 @@
       if (event.key === 'Escape' && !box.hidden) hide()
     })
 
-    return { box, img, caption, hide }
+    return { box, img, media, meta, title, subtitle, summary, points, tags, stats, links }
   }
 
-  function openLightbox(src, alt, captionText) {
-    if (!lightbox) lightbox = buildLightbox()
-    lightbox.img.src = src
-    lightbox.img.alt = alt ?? ''
-    lightbox.caption.textContent = captionText ?? ''
-    lightbox.box.hidden = false
+  function openDetail(item) {
+    if (!modal) modal = buildModal()
+    const { box, img, media, meta, title, subtitle, summary, points, tags, stats, links } = modal
+
+    media.hidden = !item.image
+    if (item.image) {
+      img.src = item.image
+      img.alt = item.imageAlt ?? item.title
+    }
+
+    meta.textContent = `${item.index} / ${item.year} · ${item.role}`
+    title.textContent = item.title
+    subtitle.textContent = item.subtitle
+    summary.textContent = item.summary
+
+    points.replaceChildren()
+    ;(item.points ?? []).forEach((point) => points.appendChild(el('li', null, point)))
+
+    tags.replaceChildren()
+    ;(item.tags ?? []).forEach((t) => tags.appendChild(el('span', 'tag', t)))
+
+    stats.replaceChildren()
+    ;(item.metrics ?? []).forEach((m) => {
+      const cell = el('div', 'modal__metric')
+      cell.appendChild(el('strong', null, m.v))
+      cell.appendChild(el('span', null, m.l))
+      stats.appendChild(cell)
+    })
+
+    links.replaceChildren()
+    ;(item.links ?? []).forEach((link) => {
+      const a = external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'))
+      a.href = link.href
+      links.appendChild(a)
+    })
+
+    box.hidden = false
     document.body.classList.add('is-locked')
     lastFocused = document.activeElement
-    lightbox.box.querySelector('.lightbox__close').focus()
+    box.querySelector('.modal__close').focus()
   }
 
   /* ---------------- 首屏 ---------------- */
@@ -95,7 +142,7 @@
     metrics.appendChild(li)
   })
 
-  /* ---------------- 作品 ---------------- */
+  /* ---------------- 作品（卡片简略，详情进弹层） ---------------- */
   $('#work-note').textContent = S.workNote ?? ''
 
   const workList = $('#work-list')
@@ -103,7 +150,7 @@
     const card = el('article', 'card reveal')
     card.style.setProperty('--i', String(i))
 
-    // 视觉区：有截图用截图，没有则用「规格面板」（不伪造界面截图）
+    // 视觉区：有截图用截图，没有则用「关键数据」面板（不伪造界面）
     const visual = el('div', 'card__visual')
     if (item.image) {
       const img = el('img', 'card__img' + (item.imageFit === 'phone' ? ' card__img--phone' : ''))
@@ -111,19 +158,16 @@
       img.alt = item.imageAlt ?? item.title
       img.loading = i === 0 ? 'eager' : 'lazy'
       visual.appendChild(img)
-
-      // 卡片里只显示一截，点击看完整截图
       visual.classList.add('card__visual--zoom')
+      visual.appendChild(el('span', 'card__zoom-hint', '查看详情'))
+      visual.addEventListener('click', () => openDetail(item))
       visual.tabIndex = 0
       visual.setAttribute('role', 'button')
-      visual.setAttribute('aria-label', `查看「${item.title}」完整截图`)
-      visual.appendChild(el('span', 'card__zoom-hint', '点击查看大图'))
-      const open = () => openLightbox(item.image, item.imageAlt ?? item.title, item.title)
-      visual.addEventListener('click', open)
+      visual.setAttribute('aria-label', `查看「${item.title}」详情`)
       visual.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault()
-          open()
+          openDetail(item)
         }
       })
     } else {
@@ -132,9 +176,9 @@
       const first = item.metrics?.[0]
       if (first) spec.appendChild(el('strong', 'spec__value', first.v))
       if (first) spec.appendChild(el('span', 'spec__caption', first.l))
-      const tags = el('div', 'spec__tags')
-      ;(item.tags ?? []).forEach((t) => tags.appendChild(el('span', 'spec__tag', t)))
-      spec.appendChild(tags)
+      const specTags = el('div', 'spec__tags')
+      ;(item.tags ?? []).forEach((t) => specTags.appendChild(el('span', 'spec__tag', t)))
+      spec.appendChild(specTags)
       visual.appendChild(spec)
     }
 
@@ -145,15 +189,19 @@
     body.appendChild(head)
 
     const title = el('h3', 'card__title', item.title)
+    title.classList.add('card__title--clickable')
+    title.tabIndex = 0
+    title.setAttribute('role', 'button')
+    title.addEventListener('click', () => openDetail(item))
+    title.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault()
+        openDetail(item)
+      }
+    })
     body.appendChild(title)
     body.appendChild(el('p', 'card__subtitle', `${item.subtitle} · ${item.role}`))
     body.appendChild(el('p', 'card__summary', item.summary))
-
-    if (item.points?.length) {
-      const ul = el('ul', 'card__points')
-      item.points.forEach((point) => ul.appendChild(el('li', null, point)))
-      body.appendChild(ul)
-    }
 
     const tags = el('div', 'card__tags')
     ;(item.tags ?? []).forEach((t) => tags.appendChild(el('span', 'tag', t)))
@@ -170,17 +218,17 @@
       body.appendChild(stats)
     }
 
-    if (item.links?.length) {
-      const links = el('div', 'card__links')
-      item.links.forEach((link) => {
-        const a = el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗')
-        a.href = link.href
-        a.target = '_blank'
-        a.rel = 'noopener'
-        links.appendChild(a)
-      })
-      body.appendChild(links)
-    }
+    const links = el('div', 'card__links')
+    ;(item.links ?? []).forEach((link) => {
+      const a = external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'))
+      a.href = link.href
+      links.appendChild(a)
+    })
+    const detailBtn = el('button', 'link link--ghost', '详情 +')
+    detailBtn.type = 'button'
+    detailBtn.addEventListener('click', () => openDetail(item))
+    links.appendChild(detailBtn)
+    body.appendChild(links)
 
     card.appendChild(visual)
     card.appendChild(body)
@@ -229,10 +277,8 @@
   const links = $('#contact-links')
   S.contact.links.forEach((link) => {
     const li = el('li')
-    const a = el('a', null, link.label + ' ↗')
+    const a = external(el('a', null, link.label + ' ↗'))
     a.href = link.href
-    a.target = '_blank'
-    a.rel = 'noopener'
     li.appendChild(a)
     links.appendChild(li)
   })
@@ -278,7 +324,6 @@
   $('#footer-name').textContent = `${p.name} · ${p.latin}`
   $('#footer-year').textContent = `© ${new Date().getFullYear()}`
 
-  // 平滑滚动（尊重系统减动效设置）
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (event) => {
       const id = a.getAttribute('href').slice(1)

@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    申思宇个人主页 · 样式
    设计语言：近黑底 + 大字标题 + 等宽编号 + 单一强调色
    ========================================================= */
@@ -401,7 +401,7 @@ a {
 
 .card {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(20px, 3vw, 40px);
   align-items: stretch;
   padding: clamp(18px, 2.4vw, 28px);
@@ -421,9 +421,15 @@ a {
   overflow: hidden;
   background: var(--bg-soft);
   border: 1px solid var(--line);
-  min-height: 240px;
+  /* 固定比例，且不被 grid 拉伸（否则高度反推宽度会撑出列） */
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  align-self: start;
+  min-height: 0;
 }
 .card__img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -432,10 +438,11 @@ a {
 }
 
 /* 手机端截图：完整展示，带边框阴影，像一张“设备图” */
+/* 手机截图在卡片里按比例裁切填充；完整图在详情弹层里看 */
 .card__img--phone {
-  object-fit: contain;
-  padding: clamp(14px, 2vw, 26px);
-  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.45));
+  object-fit: cover;
+  object-position: top center;
+  padding: 0;
 }
 
 /* 可点击放大 */
@@ -465,28 +472,28 @@ a {
   transform: none;
 }
 
-/* ---------------- 截图弹层 ---------------- */
+/* ---------------- 项目详情弹层 ---------------- */
 body.is-locked {
   overflow: hidden;
 }
 
-.lightbox {
+.modal {
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(16px, 4vw, 56px);
-  background: rgba(6, 6, 8, 0.86);
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: rgba(6, 6, 8, 0.88);
   backdrop-filter: blur(10px);
-  animation: lightbox-in 0.22s ease both;
+  animation: modal-in 0.22s ease both;
+  overflow: auto;
 }
-.lightbox[hidden] {
+.modal[hidden] {
   display: none;
 }
 
-@keyframes lightbox-in {
+@keyframes modal-in {
   from {
     opacity: 0;
   }
@@ -495,36 +502,122 @@ body.is-locked {
   }
 }
 
-.lightbox__figure {
-  margin: 0;
-  max-width: min(1200px, 96vw);
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow: auto;
+.modal__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 36px);
+  width: min(1180px, 100%);
+  max-height: calc(100vh - 2 * clamp(12px, 3vw, 40px));
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.lightbox__img {
+.modal__media {
+  background: #0d0d0f;
+  border-right: 1px solid var(--line);
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+}
+.modal__img {
   width: 100%;
   height: auto;
-  max-height: calc(100vh - 140px);
-  object-fit: contain;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-  background: #fff;
+  display: block;
 }
 
-.lightbox__caption {
+.modal__body {
+  padding: clamp(20px, 3vw, 34px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__meta {
+  margin: 0 0 10px;
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+.modal__title {
+  margin: 0;
+  font-size: clamp(21px, 2.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.modal__subtitle {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.modal__summary {
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--text) 86%, transparent);
+}
+.modal__points {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal__points li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--text) 78%, transparent);
+}
+.modal__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 6px;
+  height: 1px;
+  background: var(--accent);
+}
+.modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+.modal__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.modal__metric strong {
+  display: block;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+.modal__metric span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
   color: var(--muted);
-  text-align: center;
+}
+.modal__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
 }
 
-.lightbox__close {
-  position: absolute;
+.modal__close {
+  position: fixed;
   top: clamp(12px, 2vw, 24px);
   right: clamp(12px, 2vw, 24px);
   width: 44px;
@@ -533,17 +626,28 @@ body.is-locked {
   place-items: center;
   border-radius: 50%;
   border: 1px solid var(--line-strong);
-  background: rgba(20, 20, 22, 0.8);
+  background: rgba(20, 20, 22, 0.85);
   color: var(--text);
   font-size: 16px;
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
-.lightbox__close:hover {
+.modal__close:hover {
   border-color: var(--accent);
   background: rgba(255, 90, 60, 0.16);
 }
 
+@media (max-width: 900px) {
+  .modal__panel {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+  .modal__media {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    max-height: 46vh;
+  }
+}
 /* 无截图时的“规格面板” */
 .spec {
   height: 100%;
@@ -595,6 +699,7 @@ body.is-locked {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  padding: clamp(4px, 0.8vw, 12px) 0;
 }
 .card__head {
   display: flex;
@@ -687,8 +792,10 @@ body.is-locked {
 .card__links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: auto;
+  padding-top: 20px;
 }
 .link {
   font-size: 13px;
@@ -937,5 +1044,76 @@ body.is-locked {
   }
   .footer {
     flex-direction: column;
+  }
+}
+
+/* ---------------- 卡片补充 ---------------- */
+.card__title--clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.card__title--clickable:hover,
+.card__title--clickable:focus-visible {
+  color: var(--accent);
+}
+
+.link--ghost {
+  background: transparent;
+  border-style: dashed;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+}
+.link--ghost:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* ---------------- 卫星轨道 ---------------- */
+.orb__orbit {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  animation: spin 20s linear infinite;
+}
+.orb__sat {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translateX(-50%);
+}
+.orb__sat i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.85);
+}
+.orb__sat b {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 5px;
+  margin: -2.5px 0 0 -11px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    #6ea8ff 0 7px,
+    transparent 7px 15px,
+    #6ea8ff 15px 22px
+  );
+  opacity: 0.9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb__orbit {
+    animation: none;
   }
 }
