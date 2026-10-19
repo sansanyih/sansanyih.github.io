@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 渲染与交互 —— 内容全部来自 content.js，这里只负责「怎么呈现」
  */
 ;(function () {
@@ -18,7 +18,7 @@
     return a
   }
 
-  /* ---------------- 项目详情弹层（上下结构） ---------------- */
+  /* ---------------- 项目详情弹层 ---------------- */
   let modal = null
   let lastFocused = null
 
@@ -41,18 +41,14 @@
     const title = el('h3', 'modal__title')
     title.id = 'modal-title'
     const subtitle = el('p', 'modal__subtitle')
-    const summary = el('p', 'modal__summary')
-    const what = el('p', 'modal__what')
-    const didTitle = el('h4', 'modal__h4', '我做了什么')
-    const did = el('ul', 'modal__did')
-    const hlTitle = el('h4', 'modal__h4', '亮点在哪')
-    const highlights = el('div', 'modal__highlights')
-    const limits = el('p', 'modal__limits')
+    const summary = el('p', 'modal__lead')
+    const prose = el('div', 'modal__prose')
+    const points = el('ul', 'modal__points')
     const tags = el('div', 'modal__tags')
     const stats = el('div', 'modal__metrics')
     const links = el('div', 'modal__links')
 
-    body.append(meta, title, subtitle, summary, what, didTitle, did, hlTitle, highlights, limits, tags, stats, links)
+    body.append(meta, title, subtitle, summary, prose, points, tags, stats, links)
     panel.append(media, body)
     box.append(close, panel)
     document.body.appendChild(box)
@@ -70,21 +66,21 @@
       if (event.key === 'Escape' && !box.hidden) hide()
     })
 
-    return { box, media, meta, title, subtitle, summary, what, did, highlights, limits, tags, stats, links, didTitle, hlTitle }
+    return { box, media, meta, title, subtitle, summary, prose, points, tags, stats, links }
   }
 
   function openDetail(item) {
     if (!modal) modal = buildModal()
     const m = modal
 
-    // 顶部截图：单张铺满，多张并排
+    // 图片上下叠放：桌面截图铺满，手机截图按高度约束并居中
     m.media.replaceChildren()
     ;(item.images ?? []).forEach((image) => {
       const figure = el('figure', 'modal__figure')
       const link = external(el('a', 'modal__shot'))
       link.href = image.src
       link.setAttribute('aria-label', `查看原图：${image.caption ?? item.title}`)
-      const node = el('img', 'modal__img')
+      const node = el('img', 'modal__img modal__img--' + (image.fit ?? 'desktop'))
       node.src = image.src
       node.alt = image.alt ?? item.title
       link.appendChild(node)
@@ -92,36 +88,19 @@
       if (image.caption) figure.appendChild(el('figcaption', 'modal__caption', image.caption))
       m.media.appendChild(figure)
     })
-    const count = (item.images ?? []).length
-    m.media.hidden = !count
-    m.media.classList.toggle('modal__media--single', count === 1)
-    m.box.classList.toggle('modal--single', count === 1)
+    m.media.hidden = !(item.images ?? []).length
 
     m.meta.textContent = `${item.index} / ${item.year} · ${item.role}`
     m.title.textContent = item.title
     m.subtitle.textContent = item.subtitle
     m.summary.textContent = item.summary
-    m.what.textContent = item.what ?? ''
 
-    const hasDid = Boolean(item.did?.length)
-    m.didTitle.hidden = !hasDid
-    m.did.hidden = !hasDid
-    m.did.replaceChildren()
-    ;(item.did ?? []).forEach((line) => m.did.appendChild(el('li', null, line)))
+    m.prose.replaceChildren()
+    ;(item.paragraphs ?? []).forEach((text) => m.prose.appendChild(el('p', 'modal__text', text)))
 
-    const hasHighlights = Boolean(item.highlights?.length)
-    m.hlTitle.hidden = !hasHighlights
-    m.highlights.hidden = !hasHighlights
-    m.highlights.replaceChildren()
-    ;(item.highlights ?? []).forEach((hl) => {
-      const block = el('div', 'hl')
-      block.appendChild(el('strong', 'hl__title', hl.title))
-      block.appendChild(el('p', 'hl__desc', hl.desc))
-      m.highlights.appendChild(block)
-    })
-
-    m.limits.textContent = item.limits ? `已知限制：${item.limits}` : ''
-    m.limits.hidden = !item.limits
+    m.points.replaceChildren()
+    ;(item.points ?? []).forEach((line) => m.points.appendChild(el('li', null, line)))
+    m.points.hidden = !(item.points ?? []).length
 
     m.tags.replaceChildren()
     ;(item.tags ?? []).forEach((t) => m.tags.appendChild(el('span', 'tag', t)))
@@ -177,7 +156,7 @@
     metrics.appendChild(li)
   })
 
-  /* ---------------- 作品（卡片简略，详情进弹层） ---------------- */
+  /* ---------------- 作品 ---------------- */
   $('#work-note').textContent = S.workNote ?? ''
 
   const workList = $('#work-list')
@@ -188,7 +167,7 @@
     const cover = (item.images ?? [])[0]
     const visual = el('div', 'card__visual')
     if (cover) {
-      const img = el('img', 'card__img' + (item.imageFit === 'phone' ? ' card__img--phone' : ''))
+      const img = el('img', 'card__img' + (cover.fit === 'phone' ? ' card__img--phone' : ''))
       img.src = cover.src
       img.alt = cover.alt ?? item.title
       img.loading = i === 0 ? 'eager' : 'lazy'

@@ -1,6 +1,6 @@
 /**
- * 站点内容配置 —— 以后维护只改这个文件，不用碰 HTML / CSS / JS。
- * 改完直接 commit & push，GitHub Pages 会自动更新。
+ * 站点内容配置 —— 以后维护只改这个文件。
+ * 改完 commit & push，GitHub Pages 自动更新。
  */
 window.SITE = {
   profile: {
@@ -22,7 +22,7 @@ window.SITE = {
     ]
   },
 
-  workNote: '三个项目都是我自己从设计、开发到部署做完的。点卡片看：项目是什么、我做了什么、亮点在哪',
+  workNote: '三个项目从设计、开发到部署均为独立完成。点卡片看完整说明',
 
   work: [
     {
@@ -33,29 +33,16 @@ window.SITE = {
       role: '独立完成',
       summary:
         '一套代码同时产出 H5 与微信小程序的商城，覆盖首页、分类、详情、购物车、下单、订单、地址的完整交易链路。',
-      what:
-        '原项目是 2020 年的 Vue2 + webpack 商城，在新版 Node 上连装依赖都会失败。我把它整体迁到 uni-app + Vue3 + TypeScript + Vite + Pinia，并补上 Mock 层、分包和测试，让它变成能维护的工程。',
-      did: [
-        '重写 10 个页面：首页、分类、详情、购物车、搜索、我的、登录、确认订单、订单列表、收货地址',
-        '重写请求层与状态层：uni.request 拦截器、Pinia 三个 store、401 带 redirect 回跳',
-        '自建 Mock 层：按 METHOD + url 拦截，不启动后端就能跑通下单全流程',
-        '工程化：vue-tsc 类型检查、Vitest 16 个用例、分包 + preloadRule、GitHub Actions 自动部署'
+      paragraphs: [
+        '原始项目是 2020 年的 Vue2 + webpack 商城，在新版 Node 上装依赖就会失败。迁移时没有逐行翻译语法，而是先定分层再迁页面：重写 10 个交易链路页面，请求层换成 uni.request 拦截器（Token 注入、401 带 redirect 回跳、loading 计数），状态层换成 Pinia，并补了一层按 METHOD + url 拦截的 Mock，不启动后端也能完整走完下单。',
+        '工程侧按业务域拆 order / account 子包并配置 preloadRule，把小程序主包控制在 629KB；用 vue-tsc 做类型检查、Vitest 覆盖购物车与请求层，CI 依次执行 lint → type-check → test → build → deploy，任一步失败不会上线。'
       ],
-      highlights: [
-        {
-          title: '不启动后端也能演示',
-          desc: 'Mock 层模拟 120–300ms 网络延迟，切真实后端只改一个环境变量，业务代码零改动——所以这个 Demo 点进去就能完整走完下单。'
-        },
-        {
-          title: '主包压在 629KB',
-          desc: '按业务域拆 order / account 子包，配合 preloadRule 在购物车与我的页面空闲时预加载，避免主包随页面数量线性增长。'
-        },
-        {
-          title: '有测试和门禁，不是「能跑就行」',
-          desc: '16 个用例覆盖购物车合并、数量边界、合计金额与请求层；CI 依次跑 lint → type-check → test → build → deploy，任一步失败就不会上线。'
-        }
+      points: [
+        'H5 首屏 JS 259KB（gzip 94KB），LCP 2.1s，Lighthouse 81',
+        '小程序主包 629KB，order 分包 13.4KB、account 分包 11KB',
+        'Vitest 16 个用例，覆盖同 SKU 合并、数量边界、合计金额与 Mock 路由',
+        'switchTab / navigateTo 按 tabBar 页面自动分流，登录后原路回跳'
       ],
-      limits: '只迁了核心 10 / 53 页，评价、优惠券、发票等页面未迁移；图片未转 WebP；未接真实后端联调。',
       tags: ['uni-app', 'Vue3', 'TypeScript', 'Vite', 'Pinia', 'Vitest'],
       metrics: [
         { v: '629KB', l: '小程序主包' },
@@ -66,12 +53,14 @@ window.SITE = {
         {
           src: 'assets/tinyshop-home.webp',
           alt: '小蜂商城首页：Banner、分类入口、双列商品瀑布流',
+          fit: 'phone',
           caption: '首页'
         },
         {
           src: 'assets/tinyshop-detail.jpg',
           alt: '小蜂商城商品详情页：价格区、规格选择与底部购买栏',
-          caption: '商品详情'
+          fit: 'phone',
+          caption: '商品详情页'
         }
       ],
       links: [
@@ -87,30 +76,17 @@ window.SITE = {
       year: '2025',
       role: '独立完成',
       summary:
-        '输入一句需求，生成结构化大纲，逐步生成页面，最后一键导出可编辑的 .pptx；也能把 Word / PDF / Excel 当上下文。',
-      what:
-        '大模型写 PPT 的痛点不是「写得不好」，而是「写出来的东西没法直接变成幻灯片」。我把模型输出约束成固定大纲结构，前端按结构渲染并负责导出，同时把 4MB 的重依赖从首屏挪走。',
-      did: [
-        '接入 DeepSeek 流式接口，按结构化 Prompt 输出「标题 + 要点 + 配图建议」大纲',
-        '流式渲染 + 自动滚动 + 打字机效果，生成过程中输入框不阻塞',
-        '用 pptxgenjs 逐页生成并导出 .pptx，支持 Word / PDF / Excel 作为上下文',
-        '把 ECharts、pdfjs-dist、xlsx、pptxgenjs 改成动作触发的动态 import'
+        '输入一句需求，生成结构化大纲，逐步生成页面，最后一键导出可编辑的 .pptx；也能把 Word / PDF / Excel 作为上下文。',
+      paragraphs: [
+        '大模型写 PPT 的难点不是「写得不好」，而是写出来的东西没法直接变成幻灯片。方案是把模型输出约束成固定大纲结构（标题 + 要点 + 配图建议），前端按结构渲染并负责导出，排版不会随模型自由发挥而崩。',
+        '另一个问题是首屏体积：pptxgenjs、pdfjs-dist、xlsx、ECharts 一度把首屏包推到 4MB 以上。这些依赖全部改成动作触发的动态 import，不点「生成 PPT」就不会下载 pptxgenjs。大模型请求走服务端代理，构建产物里搜不到任何密钥。'
       ],
-      highlights: [
-        {
-          title: '首屏砍掉 53%',
-          desc: '重依赖不再随首屏加载：首屏 JS 从 4.13MB 降到 1.41MB，不点「生成 PPT」就不会下载 pptxgenjs。'
-        },
-        {
-          title: '让模型输出「可排版」的结构',
-          desc: '不用自由文本，而是约束成标题 / 要点 / 配图建议三段式，前端照着结构渲染——排版不会随模型发挥而崩。'
-        },
-        {
-          title: '密钥不进前端',
-          desc: '大模型请求走服务端代理（Vite proxy / Vercel Function），构建产物里搜不到任何 sk- 开头的字符串。'
-        }
+      points: [
+        '首屏 JS 4.13MB → 1.41MB（-53%）',
+        '流式增量渲染，生成过程不阻塞输入框，自动滚动到底',
+        '支持 Word / PDF / Excel 解析为上下文，按自然语言生成图表',
+        'Key 只存在服务端（Vite 代理 / Vercel Function），前端不可见'
       ],
-      limits: 'PPT 模板样式固定、未做自定义主题；对话历史未落库，刷新即丢；超长文档未做上下文裁剪。',
       tags: ['Vue3', 'Vite', 'Element Plus', 'DeepSeek', 'pptxgenjs', 'ECharts'],
       metrics: [
         { v: '-53%', l: '首屏 JS' },
@@ -121,6 +97,7 @@ window.SITE = {
         {
           src: 'assets/aippt.jpg',
           alt: 'AI PPT 生成器：输入需求后由 DeepSeek 流式返回 5 页 PPT 大纲',
+          fit: 'desktop',
           caption: '真实调用 DeepSeek 生成的 5 页大纲'
         }
       ],
@@ -134,30 +111,17 @@ window.SITE = {
       year: '2025',
       role: '全栈独立开发',
       summary:
-        '面向动漫爱好者的内容社区：前台展示站 + 后台管理系统 + 后端 API，一个人把三端从数据库表设计做到页面。',
-      what:
-        '这个项目最想解决的不是页面数量，而是「三端协同」：同一个内容模型要同时喂给前台展示、后台管理和后端接口。我把响应结构、权限划分和字段命名统一起来，改一处不用等联调。',
-      did: [
-        '前台：番剧列表 / 详情 / 社区，ECharts 六维雷达评分（音乐 / 美术 / 剧本 / 演出 / 节目 / 声优）',
-        '后台：侧边栏 + 路由守卫 + ECharts 统计看板 + 番剧 / 文章 / 视频 / 用户四套 CRUD 表单',
-        '后端：Spring Boot + MyBatis-Plus + JWT(HS256) + BCrypt，12 个业务模块、16 张表',
-        '数据层：统一响应体 { code, message, data }、全局异常、参数校验、逻辑删除'
+        '面向动漫爱好者的内容社区：前台展示站 + 后台管理系统 + 后端 API，三端从数据库表设计做到页面。',
+      paragraphs: [
+        '最难处理的不是页面数量，而是三端协同：同一个内容模型要同时喂给前台展示、后台管理和后端接口。做法是后端统一返回 { code, message, data }，前端在 axios 拦截器里一次性解包并处理 401，业务层只拿数据本身，字段改动时不用逐页改判断。',
+        '后台用 Element Plus 搭侧边栏 + 路由守卫 + ECharts 统计看板（内容分布环形图、7 日新增折线图），配番剧 / 文章 / 视频 / 用户四套 CRUD 表单；后端 Spring Boot + MyBatis-Plus + JWT(HS256) + BCrypt，按「公开读 / 登录互动 / 管理员改删」做接口级权限。'
       ],
-      highlights: [
-        {
-          title: '三端一个人闭环',
-          desc: '从建表、写接口到前台和后台页面全部自己完成，接口字段要变时前后端一起改，不会有「等对方联调」的空转。'
-        },
-        {
-          title: '响应体统一，前端不再到处判 code',
-          desc: '后端统一返回 { code, message, data }，前端在 axios 拦截器里一次性解包并处理 401，业务层只拿数据本身。'
-        },
-        {
-          title: '后台有真正能用的数据看板',
-          desc: 'ECharts 环形图看内容分布、折线图看 7 日新增趋势，运营扫一眼就知道哪类内容在涨；四套 CRUD 表单配路由守卫按权限隔离。'
-        }
+      points: [
+        '12 个业务模块、16 张表，逻辑删除 + 全局异常 + 参数校验',
+        '前台用 ECharts 做番剧六维雷达评分（音乐 / 美术 / 剧本 / 演出 / 节目 / 声优）',
+        '后台数据看板：内容分布环形图 + 近 7 天新增趋势折线图',
+        '三端同一套接口约定，改字段时前后端一起改，不用等联调'
       ],
-      limits: '种子数据的封面是占位图；评论与搜索未做分页优化；后台统计接口需管理员权限，演示账号看到的是本地兜底数据。',
       tags: ['Vue3', 'TypeScript', 'Element Plus', 'ECharts', 'Spring Boot', 'MySQL'],
       metrics: [
         { v: '12', l: '业务模块' },
@@ -168,11 +132,13 @@ window.SITE = {
         {
           src: 'assets/cnacg.jpg',
           alt: 'CnAcg 前台首页：番剧轮播与随机推荐卡片',
+          fit: 'desktop',
           caption: '前台展示站'
         },
         {
           src: 'assets/cnacg-admin.jpg',
           alt: 'CnAcg 后台管理：统计卡片与 ECharts 环形图、7 日趋势折线图',
+          fit: 'desktop',
           caption: '后台管理系统 · ECharts 看板'
         }
       ],

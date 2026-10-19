@@ -472,7 +472,7 @@ a {
   transform: none;
 }
 
-/* ---------------- 项目详情弹层（上下结构） ---------------- */
+/* ---------------- 项目详情弹层 ---------------- */
 body.is-locked {
   overflow: hidden;
 }
@@ -502,27 +502,25 @@ body.is-locked {
 }
 
 .modal__panel {
-  width: min(1020px, 100%);
+  width: min(940px, 100%);
   max-height: calc(100vh - 2 * clamp(10px, 2.5vw, 32px));
   overflow: auto;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 18px;
-  scroll-behavior: smooth;
 }
 
-/* 顶部截图：单张铺满，多张并排 */
+/* 截图上下叠放 */
 .modal__media {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  gap: 2px;
-  background: #0d0d0f;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: #0c0c0e;
   border-bottom: 1px solid var(--line);
 }
 .modal__figure {
-  position: relative;
   margin: 0;
+  padding-bottom: 10px;
 }
 .modal__shot {
   display: block;
@@ -530,46 +528,27 @@ body.is-locked {
 .modal__img {
   display: block;
   width: 100%;
-  height: clamp(180px, 34vh, 300px);
-  object-fit: cover;
-  object-position: top left;
+  height: auto;
 }
-
-/* 只有一张图时：弹层收窄、图片完整展示 */
-.modal--single .modal__panel {
-  width: min(820px, 100%);
-}
-.modal__media--single {
-  grid-auto-flow: row;
-}
-.modal__media--single .modal__figure {
-  display: flex;
-  justify-content: center;
-  padding: 18px;
-}
-.modal__media--single .modal__img {
+.modal__img--phone {
   width: auto;
   max-width: 100%;
-  height: auto;
-  max-height: 40vh;
-  object-fit: contain;
-  border-radius: 10px;
+  height: clamp(320px, 54vh, 560px);
+  margin: 18px auto 0;
+  border-radius: 12px;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.55);
 }
 .modal__caption {
-  position: absolute;
-  left: 12px;
-  bottom: 10px;
-  padding: 3px 10px;
-  border-radius: 100px;
-  background: rgba(6, 6, 8, 0.72);
-  color: #fff;
+  margin-top: 8px;
+  text-align: center;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
 }
 
 .modal__body {
-  padding: clamp(20px, 3.4vw, 40px);
+  padding: clamp(22px, 3.4vw, 42px);
 }
 
 .modal__meta {
@@ -581,7 +560,7 @@ body.is-locked {
 }
 .modal__title {
   margin: 0;
-  font-size: clamp(23px, 3vw, 34px);
+  font-size: clamp(23px, 3vw, 33px);
   font-weight: 700;
   letter-spacing: -0.025em;
 }
@@ -592,97 +571,63 @@ body.is-locked {
   letter-spacing: 0.08em;
   color: var(--accent);
 }
-.modal__summary {
+.modal__lead {
   margin: 18px 0 0;
   font-size: clamp(15px, 1.6vw, 17px);
   line-height: 1.75;
   color: var(--text);
 }
-.modal__what {
-  margin: 12px 0 0;
+
+.modal__prose {
+  margin-top: 14px;
+}
+.modal__text {
+  margin: 0 0 12px;
   font-size: 14px;
-  line-height: 1.85;
+  line-height: 1.9;
   color: color-mix(in srgb, var(--text) 74%, transparent);
 }
-
-.modal__h4 {
-  margin: 28px 0 10px;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--accent);
+.modal__text:last-child {
+  margin-bottom: 0;
 }
 
-.modal__did {
-  margin: 0;
-  padding: 0;
+.modal__points {
+  margin: 20px 0 0;
+  padding: 16px 0 0;
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.modal__did li {
+.modal__points li {
   position: relative;
   padding-left: 16px;
-  font-size: 13.5px;
+  font-size: 13px;
   line-height: 1.7;
-  color: color-mix(in srgb, var(--text) 78%, transparent);
+  color: color-mix(in srgb, var(--text) 72%, transparent);
 }
-.modal__did li::before {
+.modal__points li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.68em;
+  top: 0.72em;
   width: 6px;
   height: 1px;
   background: var(--accent);
-}
-
-.modal__highlights {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.hl {
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--text) 3%, transparent);
-}
-.hl__title {
-  display: block;
-  font-size: 14px;
-  color: var(--text);
-  line-height: 1.5;
-}
-.hl__desc {
-  margin: 8px 0 0;
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: color-mix(in srgb, var(--text) 66%, transparent);
-}
-
-.modal__limits {
-  margin: 22px 0 0;
-  padding-top: 14px;
-  border-top: 1px dashed var(--line);
-  font-size: 12px;
-  line-height: 1.7;
-  color: color-mix(in srgb, var(--text) 52%, transparent);
 }
 
 .modal__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 18px;
+  margin-top: 20px;
 }
 .modal__metrics {
   display: flex;
   flex-wrap: wrap;
   gap: 28px;
-  margin-top: 18px;
+  margin-top: 20px;
   padding-top: 18px;
   border-top: 1px solid var(--line);
 }
@@ -726,19 +671,10 @@ body.is-locked {
   background: rgba(255, 90, 60, 0.16);
 }
 
-@media (max-width: 860px) {
-  .modal__did,
-  .modal__highlights {
-    grid-template-columns: 1fr;
-  }
-  .modal__media {
-    grid-auto-flow: row;
-  }
-  .modal__img {
+@media (max-width: 720px) {
+  .modal__img--phone {
     height: auto;
-    max-height: 34vh;
-    object-fit: contain;
-    background: #0d0d0f;
+    max-height: 46vh;
   }
 }
 /* 无截图时的“规格面板” */
