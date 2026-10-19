@@ -268,7 +268,7 @@
     const main = el('div', 'journey__main')
     main.appendChild(el('strong', 'journey__org', row.org))
     main.appendChild(el('span', 'journey__role', row.role))
-    main.appendChild(el('p', 'journey__note', row.note))
+    if (row.note) main.appendChild(el('p', 'journey__note', row.note))
     li.appendChild(main)
     journey.appendChild(li)
   })
