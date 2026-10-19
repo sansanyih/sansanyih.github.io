@@ -23,7 +23,22 @@
 
 ## 博客（VitePress）
 
-写一篇新文章的流程：
+### 发一篇新文章（一条命令）
+
+```bash
+cd vitepress
+node scripts/new-post.mjs "文章标题" my-slug
+```
+
+脚本会做三件事：生成 `posts/my-slug.md`（带 front matter 模板）、在首页列表按年份插入卡片、在归档页插入一行，并把「共 N 篇笔记」加一。
+
+然后：
+
+1. 打开 `vitepress/posts/my-slug.md` 写正文，补 `tags` 和 `description`
+2. 改 `vitepress/index.md` 里那张卡片的 `标签` 和 `一句话摘要`（脚本生成的是占位文字）
+3. `git add . && git commit -m "post: 文章标题" && git push` —— Actions 自动构建发布，约 1 分钟
+
+### 手动发（不想用脚本）
 
 1. 在 `vitepress/posts/` 新建 Markdown，文件头写 front matter：
 
@@ -38,10 +53,11 @@ description: 一句话摘要，会出现在列表和搜索结果里
 正文……
 ```
 
-2. 在 `vitepress/index.md` 的列表里加一张卡片（指向 `./posts/你的文件名`）
-3. `git push` —— GitHub Actions 会自动跑 `vitepress build`，把产物放进 `/blog/` 并部署
+2. 在 `vitepress/index.md` 的对应年份下加一张卡片（`<a class="post-item" href="./posts/文件名">`）
+3. 在 `vitepress/archive.md` 加一行（`<a class="archive-row" ...>`），并把左栏「共 N 篇笔记」加一
+4. `git push`
 
-本地预览：
+### 本地预览
 
 ```bash
 cd vitepress
