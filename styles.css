@@ -427,7 +427,8 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  /* 界面截图从左上开始展示，避免裁掉标题栏 */
+  object-position: top left;
 }
 
 /* 手机端截图：完整展示，带边框阴影，像一张“设备图” */
