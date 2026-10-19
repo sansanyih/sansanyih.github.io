@@ -1,60 +1,51 @@
-# sansanyih.github.io
+# 个人主页 · sansanyih.github.io
 
-个人主页（展示页）。纯 HTML / CSS / 原生 JS，**没有构建步骤**——改完推上去，GitHub Pages 自动更新。
+在线地址：**https://sansanyih.github.io/**
 
-线上地址：https://sansanyih.github.io/
+用于展示个人项目与技术方向的静态主页。纯 HTML + CSS + 原生 JavaScript，无框架、无构建依赖，首屏体积约 90KB。
 
-## 怎么改内容
+## 内容
 
-只改 `content.js`，不用碰 HTML / CSS / JS。
-
-| 想改什么 | 改哪里 |
+| 区块 | 内容 |
 | --- | --- |
-| 姓名、岗位、一句话介绍、技术栈、首屏三个数字 | `SITE.profile` |
-| 作品（标题、简介、要点、标签、指标、链接、截图） | `SITE.work` |
-| 「我怎么做事」三条 | `SITE.approach` |
-| 实习 / 教育 / 开源经历 | `SITE.journey` |
-| 邮箱、GitHub 等联系方式 | `SITE.contact` |
+| 首屏 | 姓名、岗位、一句话介绍、技术栈、三项关键数据 |
+| 01 精选作品 | TinyShop 跨端商城重构 / AI PPT 生成器 / CnAcg 动漫信息平台 |
+| 02 方法 | 三条工作原则：先量再改、结构优先、可维护性 |
+| 03 经历 | 实习、开源协作、教育背景 |
+| 04 联系 | 邮箱与主要链接 |
 
-改完直接：
+每个作品包含：技术栈、实现要点、关键指标（包体积 / 首屏性能 / 模块数量）、演示与源码地址。
+
+## 技术说明
+
+- **零依赖**：不使用框架与构建工具，直接部署静态文件
+- **内容与视图分离**：页面内容集中定义在 `content.js`，`main.js` 只负责渲染与交互
+- **响应式**：桌面双栏、移动端单栏，断点 960px / 560px
+- **无障碍**：图片提供 `alt`、键盘焦点可见、尊重系统「减少动态效果」设置
+- **视觉**：近黑底 + 单一强调色（`#ff5a3c`），标题与等宽编号构成版式层级
+
+## 本地预览
 
 ```bash
-git add -A
-git commit -m "content: 更新 xx"
-git push
+npx serve .
 ```
 
-约 1 分钟后线上生效。
+或用任意静态服务器打开根目录。
 
-## 给作品加截图
-
-1. 把图片放到 `assets/`（建议 WebP，宽度 900px 左右，控制在 100KB 内）
-2. 在 `content.js` 对应作品里加两个字段：
-
-```js
-image: 'assets/your-shot.webp',
-imageAlt: '这张图说明了什么（无障碍必填）'
-```
-
-没配 `image` 的作品会显示「关键数据 + 技术标签」的规格面板，不会出现空白。
-
-## 文件说明
+## 目录结构
 
 ```
-index.html    页面骨架（各区块的容器 + 导航 + 页脚）
-styles.css    全部样式（设计变量在 :root 里）
-content.js    站点内容（唯一需要日常维护的文件）
-main.js       渲染逻辑 + 导航高亮 + 滚动渐显 + 复制邮箱
-assets/       图片与 favicon
+index.html    页面结构
+styles.css    全部样式（设计变量集中在 :root）
+content.js    站点内容
+main.js       渲染逻辑与交互
+assets/       图片与图标
 ```
 
-## 设计约束（改样式时别破坏）
+## 维护
 
-- 强调色只有一个：`--accent`（#ff5a3c）。加第二个颜色会立刻变廉价
-- 首屏必须在 5 秒内看到：岗位 + 技术栈 + 可点 Demo + 邮箱，不要加长滚动动画
-- 每个作品卡最多 3 条要点，每条不超过 40 字
-- 数字要能对得上（构建时间、包体积、LCP 都能在对应仓库里查）
+新增或修改作品时，在 `content.js` 的 `work` 数组中追加或编辑条目即可；未配置 `image` 的作品会自动渲染为「关键数据 + 技术标签」的规格面板。图片建议使用 WebP，宽度不超过 1200px。
 
-## 部署
+## 联系
 
-仓库推到 `main` 分支即可，GitHub Pages 会直接托管根目录（已放 `.nojekyll` 跳过 Jekyll 处理）。
+shensiyu144@gmail.com · [GitHub](https://github.com/sansanyih)
