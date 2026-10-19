@@ -168,9 +168,7 @@ html {
   width: 88px;
   height: 88px;
   border-radius: 22px;
-  display: block;
-  object-fit: cover;
-  background: var(--vp-c-bg-soft);
+  background: #1a1a1e url('/blog/avatar.png') center / cover no-repeat;
 }
 
 .blog-side__name {

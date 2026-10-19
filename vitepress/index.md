@@ -7,7 +7,7 @@ layout: page
 <div class="blog-layout">
 
 <aside class="blog-side">
-  <img class="blog-side__avatar" src="https://github.com/sansanyih.png" alt="叁叁一头像" width="88" height="88" loading="lazy" />
+  <div class="blog-side__avatar" role="img" aria-label="叁叁一头像"></div>
   <h2 class="blog-side__name">叁叁一</h2>
   <p class="blog-side__role">前端开发工程师 · 2026 届</p>
   <p class="blog-side__bio">

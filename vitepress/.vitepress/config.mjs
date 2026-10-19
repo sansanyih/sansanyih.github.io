@@ -5,7 +5,7 @@ export default defineConfig({
   title: '叁叁一 · 技术笔记',
   description: '重构、性能、跨端——写清楚踩过的坑和当时的判断依据。',
   base: '/blog/',
-  appearance: false,
+  appearance: 'force-dark',
   titleTemplate: false,
   srcExclude: ['README.md'],
   cleanUrls: false,
