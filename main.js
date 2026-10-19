@@ -18,7 +18,7 @@
     return a
   }
 
-  /* ---------------- 项目详情弹层 ---------------- */
+  /* ---------------- 项目详情弹层（上下结构） ---------------- */
   let modal = null
   let lastFocused = null
 
@@ -42,18 +42,17 @@
     title.id = 'modal-title'
     const subtitle = el('p', 'modal__subtitle')
     const summary = el('p', 'modal__summary')
-    const sections = el('div', 'modal__sections')
-    const structureTitle = el('h4', 'modal__h4', '方案结构')
-    const structure = el('div', 'modal__structure')
-    const resultTitle = el('h4', 'modal__h4', '可验证的结果')
-    const result = el('p', 'modal__result')
-    const issuesTitle = el('h4', 'modal__h4', '尚未解决')
-    const issues = el('ul', 'modal__issues')
+    const what = el('p', 'modal__what')
+    const didTitle = el('h4', 'modal__h4', '我做了什么')
+    const did = el('ul', 'modal__did')
+    const hlTitle = el('h4', 'modal__h4', '亮点在哪')
+    const highlights = el('div', 'modal__highlights')
+    const limits = el('p', 'modal__limits')
     const tags = el('div', 'modal__tags')
     const stats = el('div', 'modal__metrics')
     const links = el('div', 'modal__links')
 
-    body.append(meta, title, subtitle, summary, sections, structureTitle, structure, resultTitle, result, issuesTitle, issues, tags, stats, links)
+    body.append(meta, title, subtitle, summary, what, didTitle, did, hlTitle, highlights, limits, tags, stats, links)
     panel.append(media, body)
     box.append(close, panel)
     document.body.appendChild(box)
@@ -71,22 +70,26 @@
       if (event.key === 'Escape' && !box.hidden) hide()
     })
 
-    return { box, media, meta, title, subtitle, summary, sections, structure, result, issues, tags, stats, links, structureTitle, resultTitle, issuesTitle }
+    return { box, media, meta, title, subtitle, summary, what, did, highlights, limits, tags, stats, links, didTitle, hlTitle }
   }
 
   function openDetail(item) {
     if (!modal) modal = buildModal()
     const m = modal
 
-    // 图片区：支持多张（前台 + 后台）
+    // 顶部截图：单张铺满，多张并排
     m.media.replaceChildren()
-    ;(item.images ?? []).forEach((img) => {
+    ;(item.images ?? []).forEach((image) => {
       const figure = el('figure', 'modal__figure')
+      const link = external(el('a', 'modal__shot'))
+      link.href = image.src
+      link.setAttribute('aria-label', `查看原图：${image.caption ?? item.title}`)
       const node = el('img', 'modal__img')
-      node.src = img.src
-      node.alt = img.alt ?? item.title
-      figure.appendChild(node)
-      if (img.caption) figure.appendChild(el('figcaption', 'modal__caption', img.caption))
+      node.src = image.src
+      node.alt = image.alt ?? item.title
+      link.appendChild(node)
+      figure.appendChild(link)
+      if (image.caption) figure.appendChild(el('figcaption', 'modal__caption', image.caption))
       m.media.appendChild(figure)
     })
     m.media.hidden = !(item.images ?? []).length
@@ -95,37 +98,27 @@
     m.title.textContent = item.title
     m.subtitle.textContent = item.subtitle
     m.summary.textContent = item.summary
+    m.what.textContent = item.what ?? ''
 
-    // 问题 / 取舍
-    m.sections.replaceChildren()
-    ;(item.sections ?? []).forEach((section) => {
-      const block = el('div', 'modal__section')
-      block.appendChild(el('h4', 'modal__h4', section.title))
-      block.appendChild(el('p', 'modal__text', section.body))
-      m.sections.appendChild(block)
+    const hasDid = Boolean(item.did?.length)
+    m.didTitle.hidden = !hasDid
+    m.did.hidden = !hasDid
+    m.did.replaceChildren()
+    ;(item.did ?? []).forEach((line) => m.did.appendChild(el('li', null, line)))
+
+    const hasHighlights = Boolean(item.highlights?.length)
+    m.hlTitle.hidden = !hasHighlights
+    m.highlights.hidden = !hasHighlights
+    m.highlights.replaceChildren()
+    ;(item.highlights ?? []).forEach((hl) => {
+      const block = el('div', 'hl')
+      block.appendChild(el('strong', 'hl__title', hl.title))
+      block.appendChild(el('p', 'hl__desc', hl.desc))
+      m.highlights.appendChild(block)
     })
 
-    // 方案结构（四张卡）
-    m.structure.replaceChildren()
-    const hasStructure = Boolean(item.structure?.length)
-    m.structureTitle.hidden = !hasStructure
-    m.structure.hidden = !hasStructure
-    ;(item.structure ?? []).forEach((step) => {
-      const card = el('div', 'plan')
-      card.appendChild(el('span', 'plan__index', step.index))
-      card.appendChild(el('strong', 'plan__title', step.title))
-      card.appendChild(el('p', 'plan__desc', step.desc))
-      m.structure.appendChild(card)
-    })
-
-    m.result.textContent = item.result ?? ''
-    m.resultTitle.hidden = !item.result
-
-    const hasIssues = Boolean(item.openIssues?.length)
-    m.issuesTitle.hidden = !hasIssues
-    m.issues.hidden = !hasIssues
-    m.issues.replaceChildren()
-    ;(item.openIssues ?? []).forEach((issue) => m.issues.appendChild(el('li', null, issue)))
+    m.limits.textContent = item.limits ? `已知限制：${item.limits}` : ''
+    m.limits.hidden = !item.limits
 
     m.tags.replaceChildren()
     ;(item.tags ?? []).forEach((t) => m.tags.appendChild(el('span', 'tag', t)))
@@ -146,6 +139,7 @@
     })
 
     m.box.hidden = false
+    m.box.querySelector('.modal__panel').scrollTop = 0
     document.body.classList.add('is-locked')
     lastFocused = document.activeElement
     m.box.querySelector('.modal__close').focus()
@@ -197,11 +191,11 @@
       img.loading = i === 0 ? 'eager' : 'lazy'
       visual.appendChild(img)
       visual.classList.add('card__visual--zoom')
-      visual.appendChild(el('span', 'card__zoom-hint', '查看案例 +'))
+      visual.appendChild(el('span', 'card__zoom-hint', '查看项目 +'))
       visual.addEventListener('click', () => openDetail(item))
       visual.tabIndex = 0
       visual.setAttribute('role', 'button')
-      visual.setAttribute('aria-label', `查看「${item.title}」案例`)
+      visual.setAttribute('aria-label', `查看「${item.title}」详情`)
       visual.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault()
@@ -261,7 +255,7 @@
       a.href = link.href
       links.appendChild(a)
     })
-    const detailBtn = el('button', 'link link--ghost', '案例详情 +')
+    const detailBtn = el('button', 'link link--ghost', '项目详情 +')
     detailBtn.type = 'button'
     detailBtn.addEventListener('click', () => openDetail(item))
     links.appendChild(detailBtn)
