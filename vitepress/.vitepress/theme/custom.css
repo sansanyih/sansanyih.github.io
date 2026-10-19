@@ -1,4 +1,4 @@
-﻿/* 与主站统一的深色 + 珊瑚色强调 */
+/* 与主站统一的深色 + 珊瑚色强调 */
 :root {
   --vp-c-brand-1: #ff5a3c;
   --vp-c-brand-2: #ff775f;
@@ -321,4 +321,8 @@ html {
   .archive-row__tags {
     display: none;
   }
+}
+/* 「主页」是跨子站链接，但不需要外链箭头 */
+.VPNavBarMenuLink.vp-external-link-icon::after {
+  display: none !important;
 }

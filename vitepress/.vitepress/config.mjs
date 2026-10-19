@@ -14,7 +14,7 @@ export default defineConfig({
     nav: [
       { text: '笔记', link: '/' },
       { text: '归档', link: '/archive' },
-      { text: '主页', link: 'https://sansanyih.github.io/' }
+      { text: '主页', link: 'https://sansanyih.github.io/', target: '_self' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/sansanyih' }],
     search: {
