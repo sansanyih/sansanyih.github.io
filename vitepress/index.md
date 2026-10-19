@@ -15,7 +15,7 @@ layout: page
     以及当时为什么那么选。
   </p>
   <ul class="blog-side__links">
-    <li><a href="https://sansanyih.github.io/" target="_blank" rel="noopener">主页</a></li>
+    <li><a href="https://sansanyih.github.io/">主页</a></li>
     <li><a href="https://github.com/sansanyih" target="_blank" rel="noopener">GitHub</a></li>
     <li><a href="mailto:shensiyu144@gmail.com">邮箱</a></li>
   </ul>
@@ -52,7 +52,7 @@ layout: page
 </a>
 
 <p class="blog-foot">
-  <a href="https://sansanyih.github.io/" target="_blank" rel="noopener">← 返回主页</a>
+  <a href="https://sansanyih.github.io/">← 返回主页</a>
 </p>
 
 </div>

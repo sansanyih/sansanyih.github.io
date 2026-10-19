@@ -29,7 +29,7 @@ layout: page
 <p class="blog-foot">
   <a href="./">← 返回笔记列表</a>
   &nbsp;·&nbsp;
-  <a href="https://sansanyih.github.io/" target="_blank" rel="noopener">返回主页</a>
+  <a href="https://sansanyih.github.io/">返回主页</a>
 </p>
 
 </div>

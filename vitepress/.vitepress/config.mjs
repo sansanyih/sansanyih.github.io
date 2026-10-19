@@ -1,4 +1,4 @@
-﻿import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -14,7 +14,7 @@ export default defineConfig({
     nav: [
       { text: '笔记', link: '/' },
       { text: '归档', link: '/archive' },
-      { text: '主页', link: 'https://sansanyih.github.io/', target: '_blank', rel: 'noopener' }
+      { text: '主页', link: 'https://sansanyih.github.io/' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/sansanyih' }],
     search: {
