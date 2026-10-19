@@ -37,7 +37,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site/blog
-          cp index.html styles.css content.js main.js _site/
+          cp index.html styles.css content.js main.js blog.html _site/
           cp -R assets _site/assets
           cp .nojekyll _site/
           cp -R vitepress/.vitepress/dist/. _site/blog/
