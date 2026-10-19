@@ -13,6 +13,59 @@
     return node
   }
 
+  /* ---------------- 截图弹层 ---------------- */
+  let lightbox = null
+  let lastFocused = null
+
+  function buildLightbox() {
+    const box = el('div', 'lightbox')
+    box.setAttribute('role', 'dialog')
+    box.setAttribute('aria-modal', 'true')
+    box.setAttribute('aria-label', '截图预览')
+    box.hidden = true
+
+    const close = el('button', 'lightbox__close', '✕')
+    close.type = 'button'
+    close.setAttribute('aria-label', '关闭预览')
+
+    const figure = el('figure', 'lightbox__figure')
+    const img = el('img', 'lightbox__img')
+    img.alt = ''
+    const caption = el('figcaption', 'lightbox__caption')
+    figure.appendChild(img)
+    figure.appendChild(caption)
+
+    box.appendChild(close)
+    box.appendChild(figure)
+    document.body.appendChild(box)
+
+    const hide = () => {
+      box.hidden = true
+      document.body.classList.remove('is-locked')
+      lastFocused?.focus?.()
+    }
+    box.addEventListener('click', (event) => {
+      if (event.target === box) hide()
+    })
+    close.addEventListener('click', hide)
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !box.hidden) hide()
+    })
+
+    return { box, img, caption, hide }
+  }
+
+  function openLightbox(src, alt, captionText) {
+    if (!lightbox) lightbox = buildLightbox()
+    lightbox.img.src = src
+    lightbox.img.alt = alt ?? ''
+    lightbox.caption.textContent = captionText ?? ''
+    lightbox.box.hidden = false
+    document.body.classList.add('is-locked')
+    lastFocused = document.activeElement
+    lightbox.box.querySelector('.lightbox__close').focus()
+  }
+
   /* ---------------- 首屏 ---------------- */
   const p = S.profile
   $('#hero-eyebrow').textContent = p.eyebrow
@@ -58,6 +111,21 @@
       img.alt = item.imageAlt ?? item.title
       img.loading = i === 0 ? 'eager' : 'lazy'
       visual.appendChild(img)
+
+      // 卡片里只显示一截，点击看完整截图
+      visual.classList.add('card__visual--zoom')
+      visual.tabIndex = 0
+      visual.setAttribute('role', 'button')
+      visual.setAttribute('aria-label', `查看「${item.title}」完整截图`)
+      visual.appendChild(el('span', 'card__zoom-hint', '点击查看大图'))
+      const open = () => openLightbox(item.image, item.imageAlt ?? item.title, item.title)
+      visual.addEventListener('click', open)
+      visual.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          open()
+        }
+      })
     } else {
       const spec = el('div', 'spec')
       spec.appendChild(el('span', 'spec__label', 'KEY RESULT'))
