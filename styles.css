@@ -1117,3 +1117,124 @@ body.is-locked {
     animation: none;
   }
 }
+/* ---------------- 详情弹层：内容分区 ---------------- */
+.modal__media {
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px;
+}
+.modal__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.modal__caption {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-align: center;
+}
+
+.modal__sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+.modal__section {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.modal__section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.modal__body > .modal__h4 {
+  margin-top: 22px;
+}
+.modal__h4 {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.modal__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--text) 80%, transparent);
+}
+
+.modal__structure {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 4px 0 20px;
+}
+.plan {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+.plan__index {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+.plan__title {
+  display: block;
+  margin: 6px 0 4px;
+  font-size: 14px;
+  color: var(--text);
+}
+.plan__desc {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--text) 66%, transparent);
+}
+
+.modal__result {
+  margin: 4px 0 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--text) 84%, transparent);
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.modal__issues {
+  margin: 4px 0 20px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.modal__issues li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--text) 62%, transparent);
+}
+.modal__issues li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .modal__structure {
+    grid-template-columns: 1fr;
+  }
+}

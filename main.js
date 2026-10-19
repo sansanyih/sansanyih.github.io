@@ -12,7 +12,6 @@
     if (text != null) node.textContent = text
     return node
   }
-
   const external = (a) => {
     a.target = '_blank'
     a.rel = 'noopener'
@@ -36,21 +35,25 @@
 
     const panel = el('div', 'modal__panel')
     const media = el('div', 'modal__media')
-    const img = el('img', 'modal__img')
-    media.appendChild(img)
-
     const body = el('div', 'modal__body')
+
     const meta = el('p', 'modal__meta')
     const title = el('h3', 'modal__title')
     title.id = 'modal-title'
     const subtitle = el('p', 'modal__subtitle')
     const summary = el('p', 'modal__summary')
-    const points = el('ul', 'modal__points')
+    const sections = el('div', 'modal__sections')
+    const structureTitle = el('h4', 'modal__h4', '方案结构')
+    const structure = el('div', 'modal__structure')
+    const resultTitle = el('h4', 'modal__h4', '可验证的结果')
+    const result = el('p', 'modal__result')
+    const issuesTitle = el('h4', 'modal__h4', '尚未解决')
+    const issues = el('ul', 'modal__issues')
     const tags = el('div', 'modal__tags')
     const stats = el('div', 'modal__metrics')
     const links = el('div', 'modal__links')
 
-    body.append(meta, title, subtitle, summary, points, tags, stats, links)
+    body.append(meta, title, subtitle, summary, sections, structureTitle, structure, resultTitle, result, issuesTitle, issues, tags, stats, links)
     panel.append(media, body)
     box.append(close, panel)
     document.body.appendChild(box)
@@ -68,49 +71,84 @@
       if (event.key === 'Escape' && !box.hidden) hide()
     })
 
-    return { box, img, media, meta, title, subtitle, summary, points, tags, stats, links }
+    return { box, media, meta, title, subtitle, summary, sections, structure, result, issues, tags, stats, links, structureTitle, resultTitle, issuesTitle }
   }
 
   function openDetail(item) {
     if (!modal) modal = buildModal()
-    const { box, img, media, meta, title, subtitle, summary, points, tags, stats, links } = modal
+    const m = modal
 
-    media.hidden = !item.image
-    if (item.image) {
-      img.src = item.image
-      img.alt = item.imageAlt ?? item.title
-    }
+    // 图片区：支持多张（前台 + 后台）
+    m.media.replaceChildren()
+    ;(item.images ?? []).forEach((img) => {
+      const figure = el('figure', 'modal__figure')
+      const node = el('img', 'modal__img')
+      node.src = img.src
+      node.alt = img.alt ?? item.title
+      figure.appendChild(node)
+      if (img.caption) figure.appendChild(el('figcaption', 'modal__caption', img.caption))
+      m.media.appendChild(figure)
+    })
+    m.media.hidden = !(item.images ?? []).length
 
-    meta.textContent = `${item.index} / ${item.year} · ${item.role}`
-    title.textContent = item.title
-    subtitle.textContent = item.subtitle
-    summary.textContent = item.summary
+    m.meta.textContent = `${item.index} / ${item.year} · ${item.role}`
+    m.title.textContent = item.title
+    m.subtitle.textContent = item.subtitle
+    m.summary.textContent = item.summary
 
-    points.replaceChildren()
-    ;(item.points ?? []).forEach((point) => points.appendChild(el('li', null, point)))
-
-    tags.replaceChildren()
-    ;(item.tags ?? []).forEach((t) => tags.appendChild(el('span', 'tag', t)))
-
-    stats.replaceChildren()
-    ;(item.metrics ?? []).forEach((m) => {
-      const cell = el('div', 'modal__metric')
-      cell.appendChild(el('strong', null, m.v))
-      cell.appendChild(el('span', null, m.l))
-      stats.appendChild(cell)
+    // 问题 / 取舍
+    m.sections.replaceChildren()
+    ;(item.sections ?? []).forEach((section) => {
+      const block = el('div', 'modal__section')
+      block.appendChild(el('h4', 'modal__h4', section.title))
+      block.appendChild(el('p', 'modal__text', section.body))
+      m.sections.appendChild(block)
     })
 
-    links.replaceChildren()
+    // 方案结构（四张卡）
+    m.structure.replaceChildren()
+    const hasStructure = Boolean(item.structure?.length)
+    m.structureTitle.hidden = !hasStructure
+    m.structure.hidden = !hasStructure
+    ;(item.structure ?? []).forEach((step) => {
+      const card = el('div', 'plan')
+      card.appendChild(el('span', 'plan__index', step.index))
+      card.appendChild(el('strong', 'plan__title', step.title))
+      card.appendChild(el('p', 'plan__desc', step.desc))
+      m.structure.appendChild(card)
+    })
+
+    m.result.textContent = item.result ?? ''
+    m.resultTitle.hidden = !item.result
+
+    const hasIssues = Boolean(item.openIssues?.length)
+    m.issuesTitle.hidden = !hasIssues
+    m.issues.hidden = !hasIssues
+    m.issues.replaceChildren()
+    ;(item.openIssues ?? []).forEach((issue) => m.issues.appendChild(el('li', null, issue)))
+
+    m.tags.replaceChildren()
+    ;(item.tags ?? []).forEach((t) => m.tags.appendChild(el('span', 'tag', t)))
+
+    m.stats.replaceChildren()
+    ;(item.metrics ?? []).forEach((metric) => {
+      const cell = el('div', 'modal__metric')
+      cell.appendChild(el('strong', null, metric.v))
+      cell.appendChild(el('span', null, metric.l))
+      m.stats.appendChild(cell)
+    })
+
+    m.links.replaceChildren()
     ;(item.links ?? []).forEach((link) => {
       const a = external(el('a', 'link' + (link.primary ? ' link--primary' : ''), link.label + ' ↗'))
       a.href = link.href
-      links.appendChild(a)
+      m.links.appendChild(a)
     })
 
-    box.hidden = false
+    m.box.hidden = false
     document.body.classList.add('is-locked')
     lastFocused = document.activeElement
-    box.querySelector('.modal__close').focus()
+    m.box.querySelector('.modal__close').focus()
   }
 
   /* ---------------- 首屏 ---------------- */
@@ -135,10 +173,10 @@
   })
 
   const metrics = $('#hero-metrics')
-  p.metrics.forEach((m) => {
+  p.metrics.forEach((metric) => {
     const li = el('li', 'metric')
-    li.appendChild(el('strong', 'metric__value', m.value))
-    li.appendChild(el('span', 'metric__label', m.label))
+    li.appendChild(el('strong', 'metric__value', metric.value))
+    li.appendChild(el('span', 'metric__label', metric.label))
     metrics.appendChild(li)
   })
 
@@ -150,20 +188,20 @@
     const card = el('article', 'card reveal')
     card.style.setProperty('--i', String(i))
 
-    // 视觉区：有截图用截图，没有则用「关键数据」面板（不伪造界面）
+    const cover = (item.images ?? [])[0]
     const visual = el('div', 'card__visual')
-    if (item.image) {
+    if (cover) {
       const img = el('img', 'card__img' + (item.imageFit === 'phone' ? ' card__img--phone' : ''))
-      img.src = item.image
-      img.alt = item.imageAlt ?? item.title
+      img.src = cover.src
+      img.alt = cover.alt ?? item.title
       img.loading = i === 0 ? 'eager' : 'lazy'
       visual.appendChild(img)
       visual.classList.add('card__visual--zoom')
-      visual.appendChild(el('span', 'card__zoom-hint', '查看详情'))
+      visual.appendChild(el('span', 'card__zoom-hint', '查看案例 +'))
       visual.addEventListener('click', () => openDetail(item))
       visual.tabIndex = 0
       visual.setAttribute('role', 'button')
-      visual.setAttribute('aria-label', `查看「${item.title}」详情`)
+      visual.setAttribute('aria-label', `查看「${item.title}」案例`)
       visual.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault()
@@ -188,8 +226,7 @@
     head.appendChild(el('span', 'card__year', item.year))
     body.appendChild(head)
 
-    const title = el('h3', 'card__title', item.title)
-    title.classList.add('card__title--clickable')
+    const title = el('h3', 'card__title card__title--clickable', item.title)
     title.tabIndex = 0
     title.setAttribute('role', 'button')
     title.addEventListener('click', () => openDetail(item))
@@ -209,10 +246,10 @@
 
     if (item.metrics?.length) {
       const stats = el('div', 'card__metrics')
-      item.metrics.forEach((m) => {
+      item.metrics.forEach((metric) => {
         const cell = el('div', 'card__metric')
-        cell.appendChild(el('strong', null, m.v))
-        cell.appendChild(el('span', null, m.l))
+        cell.appendChild(el('strong', null, metric.v))
+        cell.appendChild(el('span', null, metric.l))
         stats.appendChild(cell)
       })
       body.appendChild(stats)
@@ -224,7 +261,7 @@
       a.href = link.href
       links.appendChild(a)
     })
-    const detailBtn = el('button', 'link link--ghost', '详情 +')
+    const detailBtn = el('button', 'link link--ghost', '案例详情 +')
     detailBtn.type = 'button'
     detailBtn.addEventListener('click', () => openDetail(item))
     links.appendChild(detailBtn)
