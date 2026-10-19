@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 渲染与交互 —— 内容全部来自 content.js，这里只负责「怎么呈现」
  */
 ;(function () {
@@ -265,7 +265,7 @@
     $('#notes-note').textContent = S.blog.intro ?? ''
     const list = $('#notes-list')
     ;(S.blog.posts ?? []).forEach((post) => {
-      const a = external(el('a', 'note'))
+      const a = el('a', 'note')
       a.href = post.href
       const meta = el('div', 'note__meta')
       meta.appendChild(el('span', null, post.date))
@@ -273,7 +273,7 @@
       a.appendChild(meta)
       a.appendChild(el('h3', 'note__title', post.title))
       a.appendChild(el('p', 'note__summary', post.summary))
-      a.appendChild(el('span', 'note__more', '阅读全文 ↗'))
+      a.appendChild(el('span', 'note__more', '阅读全文 →'))
       list.appendChild(a)
     })
     const all = $('#notes-all')

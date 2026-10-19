@@ -5,9 +5,14 @@ export default defineConfig({
   title: '叁叁一 · 技术笔记',
   description: '重构、性能、跨端——写清楚踩过的坑和当时的判断依据。',
   base: '/blog/',
+  appearance: false,
+  titleTemplate: false,
   srcExclude: ['README.md'],
   cleanUrls: false,
-  head: [['meta', { name: 'theme-color', content: '#0b0b0c' }]],
+  head: [
+    ['meta', { name: 'theme-color', content: '#0b0b0c' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/blog/favicon.svg' }]
+  ],
   themeConfig: {
     logo: false,
     siteTitle: '叁叁一 · 笔记',
