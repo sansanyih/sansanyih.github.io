@@ -28,7 +28,7 @@
 
 ### 方式一：直接在 GitHub 网页上写（不用本地环境）
 
-1. 打开 <https://github.com/sansanyih/sansanyih-site/new/main/vitepress/posts>
+1. 打开 <https://github.com/sansanyih/sansanyih.github.io/new/main?filename=vitepress/posts/my-post.md>
 2. 文件名填 `英文-slug.md`（例如 `vue3-migration.md`）
 3. 内容：
 
