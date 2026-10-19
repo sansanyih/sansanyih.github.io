@@ -23,39 +23,54 @@
 
 ## 博客（VitePress）
 
-### 发一篇新文章（一条命令）
+文章列表、归档、标签、篇数都由 `vitepress/scripts/collect-posts.mjs` 扫描 `posts/*.md` 自动生成，
+**发布一篇文章只需要新增一个 md 文件**，不用改其他地方。
 
-```bash
-cd vitepress
-node scripts/new-post.mjs "文章标题" my-slug
-```
+### 方式一：直接在 GitHub 网页上写（不用本地环境）
 
-脚本会做三件事：生成 `posts/my-slug.md`（带 front matter 模板）、在首页列表按年份插入卡片、在归档页插入一行，并把「共 N 篇笔记」加一。
-
-然后：
-
-1. 打开 `vitepress/posts/my-slug.md` 写正文，补 `tags` 和 `description`
-2. 改 `vitepress/index.md` 里那张卡片的 `标签` 和 `一句话摘要`（脚本生成的是占位文字）
-3. `git add . && git commit -m "post: 文章标题" && git push` —— Actions 自动构建发布，约 1 分钟
-
-### 手动发（不想用脚本）
-
-1. 在 `vitepress/posts/` 新建 Markdown，文件头写 front matter：
+1. 打开 <https://github.com/sansanyih/sansanyih-site/new/main/vitepress/posts>
+2. 文件名填 `英文-slug.md`（例如 `vue3-migration.md`）
+3. 内容：
 
 ```md
 ---
 title: 文章标题
-date: 2026-01-12
-tags: [重构, uni-app]
-description: 一句话摘要，会出现在列表和搜索结果里
+date: 2026-02-01
+tags: [性能, Vite]
+description: 一句话摘要，会显示在列表、归档和搜索结果里
 ---
 
-正文……
+正文用 Markdown 写。
 ```
 
-2. 在 `vitepress/index.md` 的对应年份下加一张卡片（`<a class="post-item" href="./posts/文件名">`）
-3. 在 `vitepress/archive.md` 加一行（`<a class="archive-row" ...>`），并把左栏「共 N 篇笔记」加一
-4. `git push`
+4. 点 **Commit changes** —— Actions 自动构建，约 1 分钟后上线
+   <https://sansanyih.github.io/blog/>
+
+### 方式二：本地写（能实时预览）
+
+```bash
+cd vitepress
+npm install            # 只在第一次需要
+npm run new "文章标题" my-slug   # 生成 posts/my-slug.md
+npm run dev            # 打开 http://localhost:5173/blog/ 实时预览
+```
+
+写完提交：
+
+```bash
+git add . && git commit -m "post: 文章标题" && git push
+```
+
+`npm run build` 会先执行 `collect` 再构建，所以线上和本地看到的一致。
+
+### front matter 说明
+
+| 字段 | 说明 |
+| --- | --- |
+| `title` | 文章标题，列表、归档、浏览器标签都用它 |
+| `date` | `YYYY-MM-DD`，决定排序和分组（按年倒序） |
+| `tags` | 数组，会显示在卡片上并汇总成标签栏 |
+| `description` | 列表里的一句话摘要，也用于搜索结果 |
 
 ### 本地预览
 

@@ -4,9 +4,13 @@
   "version": "1.0.0",
   "description": "叁叁一的技术笔记 · VitePress",
   "scripts": {
+    "collect": "node scripts/collect-posts.mjs",
+    "predev": "npm run collect",
     "dev": "vitepress dev .",
+    "prebuild": "npm run collect",
     "build": "vitepress build .",
-    "preview": "vitepress preview ."
+    "preview": "vitepress preview .",
+    "new": "node scripts/new-post.mjs"
   },
   "devDependencies": {
     "vitepress": "^1.6.3"

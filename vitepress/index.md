@@ -19,7 +19,7 @@ layout: page
     <li><a href="https://github.com/sansanyih" target="_blank" rel="noopener">GitHub</a></li>
     <li><a href="mailto:shensiyu144@gmail.com">邮箱</a></li>
   </ul>
-  <p class="blog-side__meta">共 2 篇笔记</p>
+  <p class="blog-side__meta"><!-- COUNT:START -->共 2 篇笔记<!-- COUNT:END --></p>
 </aside>
 
 <div class="blog-main">
@@ -28,19 +28,23 @@ layout: page
 
 重构、性能、跨端 —— 写清楚我踩过的坑和当时的判断依据。
 
-<div class="blog-tags">
-  <a href="#重构" class="blog-tag">重构</a>
-  <a href="#性能" class="blog-tag">性能</a>
-  <a href="#跨端" class="blog-tag">跨端</a>
-  <a href="#工程化" class="blog-tag">工程化</a>
+<div class="blog-tags" id="blog-tags">
+<!-- TAGS:START -->
+<a class="blog-tag" href="#重构">重构</a>
+  <a class="blog-tag" href="#uni-app">uni-app</a>
+  <a class="blog-tag" href="#Vue3">Vue3</a>
+  <a class="blog-tag" href="#性能">性能</a>
+  <a class="blog-tag" href="#Vite">Vite</a>
+<!-- TAGS:END -->
 </div>
 
+<!-- POSTS:START -->
 ## 2026
 
 <a class="post-item" href="./posts/tinyshop-migration">
-  <span class="post-item__meta">2026-01-12 · 重构 / uni-app</span>
+  <span class="post-item__meta">2026-01-12 · 重构 / uni-app / Vue3</span>
   <span class="post-item__title">把 2020 年的商城迁到 Vue3 之后</span>
-  <p class="post-item__summary">node-sass 编译失败、53 个页面共用一套 mixin、Vuex 全局状态——迁移一个旧项目真正的难点不在语法，而在决定先动哪一层。</p>
+  <p class="post-item__summary">迁移一个旧项目真正的难点不在语法，而在决定先动哪一层。</p>
 </a>
 
 ## 2025
@@ -48,8 +52,9 @@ layout: page
 <a class="post-item" href="./posts/first-screen-4mb">
   <span class="post-item__meta">2025-06-20 · 性能 / Vite</span>
   <span class="post-item__title">首屏 4MB 是怎么砍到 1.4MB 的</span>
-  <p class="post-item__summary">pptxgenjs、pdfjs、xlsx 全堆在首屏会是什么后果，以及为什么「动作触发的动态 import」比「路由级懒加载」更适合工具类应用。</p>
+  <p class="post-item__summary">为什么「动作触发的动态 import」比「路由级懒加载」更适合工具类应用。</p>
 </a>
+<!-- POSTS:END -->
 
 <p class="blog-foot">
   <a href="https://sansanyih.github.io/">← 返回主页</a>

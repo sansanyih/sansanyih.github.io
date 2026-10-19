@@ -1,14 +1,10 @@
 #!/usr/bin/env node
 /**
- * 新建一篇笔记：生成 md + 自动在首页列表和归档页插入条目 + 更新篇数
+ * 新建一篇笔记的 md（列表由 collect-posts.mjs 自动生成，无需手改 index.md）
  *
- * 用法：
- *   node scripts/new-post.mjs "文章标题"
- *   node scripts/new-post.mjs "文章标题" my-slug
- *
- * 生成后：写正文 → git add . && git commit -m "post: xxx" && git push
+ * 用法：node scripts/new-post.mjs "文章标题" [slug]
  */
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
+import { writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -21,16 +17,11 @@ if (!title) {
   process.exit(1)
 }
 
-const today = new Date()
+const now = new Date()
 const pad = (n) => String(n).padStart(2, '0')
-const date = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`
-const year = String(today.getFullYear())
-const md = `${pad(today.getMonth() + 1)}-${pad(today.getDate())}`
+const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
 
-const argSlug = process.argv[3]
-const slug =
-  argSlug ||
-  `post-${date}`
+const slug = process.argv[3] || `post-${date}`
 if (!/^[a-z0-9-]+$/.test(slug)) {
   console.error('slug 只能用英文小写字母、数字和连字符，例如 vue3-migration')
   process.exit(1)
@@ -43,11 +34,11 @@ if (existsSync(postPath)) {
   process.exit(1)
 }
 
-const frontmatter = `---
+const template = `---
 title: ${title}
 date: ${date}
 tags: []
-description: 一句话摘要，会显示在列表和搜索结果里
+description: 一句话摘要，会显示在列表、归档和搜索结果里
 ---
 
 # ${title}
@@ -58,67 +49,13 @@ description: 一句话摘要，会显示在列表和搜索结果里
 
 段落……
 
-\`\`\`js
-// 代码块
-\`\`\`
+::: tip 提示
+用 ::: tip 可以做一个提示框
+:::
 `
-writeFileSync(postPath, frontmatter, 'utf8')
-
-/* ---------- 首页列表 ---------- */
-const indexPath = join(root, 'index.md')
-let index = readFileSync(indexPath, 'utf8')
-let archive = readFileSync(join(root, 'archive.md'), 'utf8')
-
-const card = `<a class="post-item" href="./posts/${slug}">
-  <span class="post-item__meta">${date} · 标签</span>
-  <span class="post-item__title">${title}</span>
-  <p class="post-item__summary">一句话摘要</p>
-</a>
-
-`
-
-const row = `<a class="archive-row" href="./posts/${slug}">
-  <span class="archive-row__date">${md}</span>
-  <span class="archive-row__title">${title}</span>
-  <span class="archive-row__tags">标签</span>
-</a>
-
-`
-
-function insertUnderYear(doc, year, block) {
-  const heading = `## ${year}`
-  const idx = doc.indexOf(heading)
-  if (idx >= 0) {
-    const insertAt = idx + heading.length + 1
-    return doc.slice(0, insertAt) + '\n' + block + doc.slice(insertAt)
-  }
-  // 没有该年份：按年份倒序插到第一个年份标题之前
-  const firstYear = doc.match(/^## (\d{4})$/m)
-  if (firstYear) {
-    const at = doc.indexOf(firstYear[0])
-    return doc.slice(0, at) + `${heading}\n\n${block}` + doc.slice(at)
-  }
-  const foot = doc.indexOf('<p class="blog-foot">')
-  if (foot >= 0) return doc.slice(0, foot) + `${heading}\n\n${block}` + doc.slice(foot)
-  return doc.replace(/<\/div>\s*<\/div>\s*$/, `${heading}\n\n${block}</div>\n</div>\n`)
-}
-
-index = insertUnderYear(index, year, card)
-archive = insertUnderYear(archive, year, row)
-
-// 更新「共 N 篇笔记」
-const countMatch = index.match(/共 (\d+) 篇笔记/)
-if (countMatch) {
-  index = index.replace(countMatch[0], `共 ${Number(countMatch[1]) + 1} 篇笔记`)
-}
-
-writeFileSync(indexPath, index, 'utf8')
-writeFileSync(join(root, 'archive.md'), archive, 'utf8')
+writeFileSync(postPath, template, 'utf8')
 
 console.log(`已创建 posts/${slug}.md`)
-console.log('已在 index.md 与 archive.md 插入条目')
-console.log('')
-console.log('接下来：')
-console.log('  1. 打开文件写正文、补 tags 与 description')
-console.log('  2. 本地预览: npm run dev  → http://localhost:5173/blog/')
-console.log('  3. 发布: git add . && git commit -m "post: ' + title + '" && git push')
+console.log('写完正文后直接提交，列表会自动生成：')
+console.log(`  git add . && git commit -m "post: ${title}" && git push`)
+console.log('也可以在 GitHub 网页上传这个 md 文件，效果一样。')
