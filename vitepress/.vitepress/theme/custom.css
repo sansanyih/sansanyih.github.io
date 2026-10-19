@@ -168,7 +168,12 @@ html {
   width: 88px;
   height: 88px;
   border-radius: 22px;
-  display: block;
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  font-weight: 700;
+  color: #16060a;
+  background: linear-gradient(135deg, #ff8a70, #ff5a3c);
 }
 
 .blog-side__name {

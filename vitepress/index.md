@@ -1,4 +1,4 @@
----
+﻿---
 layout: page
 ---
 
@@ -7,7 +7,7 @@ layout: page
 <div class="blog-layout">
 
 <aside class="blog-side">
-  <img class="blog-side__avatar" src="./avatar.svg" alt="申思宇头像" width="88" height="88" />
+  <div class="blog-side__avatar" aria-hidden="true">申</div>
   <h2 class="blog-side__name">申思宇</h2>
   <p class="blog-side__role">前端开发工程师 · 2026 届</p>
   <p class="blog-side__bio">
